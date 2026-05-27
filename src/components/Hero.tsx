@@ -80,7 +80,7 @@ const Hero = () => {
               className="mt-3 font-bold tracking-[-0.03em] leading-[1.02]"
               style={{
                 fontFamily: 'var(--f-sans)',
-                fontSize: 'clamp(40px, 6.5vw, 76px)',
+                fontSize: 'clamp(28px, 7vw, 76px)',
               }}
             >
               <span className="block text-white">Balanceo dinámico industrial.</span>
