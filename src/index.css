@@ -41,12 +41,14 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    overflow-x: hidden;
   }
 
   body {
     font-family: var(--f-sans);
     color: var(--ink-800);
     background: var(--paper);
+    overflow-x: hidden;
   }
 }
 
