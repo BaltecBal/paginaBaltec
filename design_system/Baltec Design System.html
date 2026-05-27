@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Baltec — Design System</title>
+<link rel="stylesheet" href="hifi/styles.css" />
+<style>
+  html, body { margin:0; padding:0; background:#fff; font-family:'Inter',sans-serif; }
+  .ds-page { max-width: 1280px; margin: 0 auto; padding: 80px 48px 120px; }
+  .ds-section { padding: 64px 0; border-top: 1px solid var(--ink-200); }
+  .ds-section:first-of-type { border-top: none; padding-top: 0; }
+  .ds-grid { display: grid; gap: 24px; }
+  .ds-card { padding: 24px; border: 1px solid var(--ink-200); background: #fff; }
+  .ds-swatch { height: 120px; display:flex; align-items:flex-end; padding: 16px; color: #fff; font-family:'IBM Plex Mono',monospace; font-size: 12px; letter-spacing:.1em; }
+  .ds-swatch.dark-text { color: var(--ink-900); }
+  .ds-row { display: flex; align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--ink-200); }
+  .ds-row:last-child { border-bottom: none; }
+  .ds-spec { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-500); letter-spacing: .08em; min-width: 280px; }
+  .ds-token { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-400); }
+  .ds-label-mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-500); }
+</style>
+</head>
+<body class="hf">
+<div class="ds-page">
+
+  <!-- Header -->
+  <header style="margin-bottom: 64px;">
+    <div class="ds-label-mono" style="color: var(--accent);">— Sistema de diseño · v1.0</div>
+    <h1 class="display-2" style="color: var(--navy-900); margin-top: 16px;">Baltec Design System</h1>
+    <p class="body-lg" style="margin-top: 16px; max-width: 640px;">
+      Tokens, tipografía, color y componentes que rigen el sitio corporativo de Baltec.
+      Sistema técnico, restringido y escalable — diseñado para precisión.
+    </p>
+  </header>
+
+  <!-- COLOR -->
+  <section class="ds-section">
+    <div class="ds-label-mono">01 — Color</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Paleta</h2>
+    <p class="body" style="margin-top: 12px; max-width: 560px;">
+      Navy vibrante como protagonista. Neutros fríos para texto y superficies. Acento naranja quemado reservado a estados activos y enlaces vivos.
+    </p>
+
+    <div class="ds-label-mono" style="margin-top: 48px;">Navy · primario</div>
+    <div class="ds-grid" style="grid-template-columns: repeat(4, 1fr); margin-top: 16px;">
+      <div>
+        <div class="ds-swatch" style="background: #142d63;">#142D63</div>
+        <div class="ds-token" style="margin-top: 8px;">--navy-900 · hero / footer</div>
+      </div>
+      <div>
+        <div class="ds-swatch" style="background: #1d3c80;">#1D3C80</div>
+        <div class="ds-token" style="margin-top: 8px;">--navy-800 · primary</div>
+      </div>
+      <div>
+        <div class="ds-swatch" style="background: #2a52a8;">#2A52A8</div>
+        <div class="ds-token" style="margin-top: 8px;">--navy-700 · hover / accent</div>
+      </div>
+      <div>
+        <div class="ds-swatch" style="background: #3d6bc8;">#3D6BC8</div>
+        <div class="ds-token" style="margin-top: 8px;">--navy-600 · highlight</div>
+      </div>
+    </div>
+
+    <div class="ds-label-mono" style="margin-top: 40px;">Neutros · texto y superficie</div>
+    <div class="ds-grid" style="grid-template-columns: repeat(6, 1fr); margin-top: 16px;">
+      <div><div class="ds-swatch" style="background: #0d1117;">#0D1117</div><div class="ds-token" style="margin-top: 8px;">--ink-900</div></div>
+      <div><div class="ds-swatch" style="background: #1c2230;">#1C2230</div><div class="ds-token" style="margin-top: 8px;">--ink-800 · body</div></div>
+      <div><div class="ds-swatch" style="background: #5a6275;">#5A6275</div><div class="ds-token" style="margin-top: 8px;">--ink-500 · secondary</div></div>
+      <div><div class="ds-swatch" style="background: #aab1c0;">#AAB1C0</div><div class="ds-token" style="margin-top: 8px;">--ink-300 · faint</div></div>
+      <div><div class="ds-swatch dark-text" style="background: #eceef3;">#ECEEF3</div><div class="ds-token" style="margin-top: 8px;">--ink-100 · subtle</div></div>
+      <div><div class="ds-swatch dark-text" style="background: #ffffff; border: 1px solid var(--ink-200);">#FFFFFF</div><div class="ds-token" style="margin-top: 8px;">paper</div></div>
+    </div>
+
+    <div class="ds-label-mono" style="margin-top: 40px;">Acento · uso restringido</div>
+    <div class="ds-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 16px; max-width: 520px;">
+      <div>
+        <div class="ds-swatch" style="background: #c44c2b;">#C44C2B</div>
+        <div class="ds-token" style="margin-top: 8px;">--accent · solo nav activo, índices, links vivos</div>
+      </div>
+      <div>
+        <div class="ds-swatch" style="background: #25d366;">#25D366</div>
+        <div class="ds-token" style="margin-top: 8px;">--whatsapp · CTAs WhatsApp</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="ds-section">
+    <div class="ds-label-mono">02 — Tipografía</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Inter + IBM Plex Mono</h2>
+    <p class="body" style="margin-top: 12px; max-width: 560px;">
+      Sans único en todo el sistema. Tracking ajustado y pesos pesados en display para densidad técnica. Mono para etiquetas e índices.
+    </p>
+
+    <div style="margin-top: 48px;">
+      <div class="ds-row">
+        <div class="ds-spec">Display 1 · Inter 700 · 92/0.98 · -0.035em</div>
+        <div class="display-1" style="color: var(--navy-900);">Balanceo dinámico.</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">Display 2 · Inter 700 · 68/1.02 · -0.032em</div>
+        <div class="display-2" style="color: var(--navy-900);">Reparación industrial.</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">Display 3 · Inter 600 · 48/1.05 · -0.028em</div>
+        <div class="display-3" style="color: var(--navy-900);">Soluciones de alta calidad.</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">H1 · Inter 600 · 38/1.1 · -0.025em</div>
+        <div class="h1" style="color: var(--navy-900);">Reparación de UTA</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">H2 · Inter 600 · 28/1.15 · -0.022em</div>
+        <div class="h2" style="color: var(--navy-900);">Nuestro objetivo</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">H3 · Inter 600 · 20/1.3 · -0.015em</div>
+        <div class="h3" style="color: var(--navy-900);">+54 9 11 3574-4732</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">Body LG · Inter 400 · 18/1.55</div>
+        <div class="body-lg">Trabajamos con tolerancias mecánicas exigentes para que sus equipos funcionen sin vibraciones.</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">Body · Inter 400 · 16/1.6</div>
+        <div class="body">Texto base para párrafos largos y descripciones de servicios.</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">Caption · Inter 400 · 13/1.5</div>
+        <div class="caption">Notas al pie y micro-copy de soporte.</div>
+      </div>
+      <div class="ds-row">
+        <div class="ds-spec">Eyebrow · Plex Mono 500 · 12/0.18em ↑</div>
+        <div><span class="eyebrow"><span class="num">01</span><span class="dash"></span><span>BALTEC · BUENOS AIRES</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPACING -->
+  <section class="ds-section">
+    <div class="ds-label-mono">03 — Espaciado · base 8pt</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Escala de espaciado</h2>
+    <div style="display: flex; gap: 32px; margin-top: 32px; align-items: flex-end;">
+      <div style="text-align: center;"><div style="width: 4px; height: 4px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">4 · s-1</div></div>
+      <div style="text-align: center;"><div style="width: 8px; height: 8px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">8 · s-2</div></div>
+      <div style="text-align: center;"><div style="width: 16px; height: 16px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">16 · s-4</div></div>
+      <div style="text-align: center;"><div style="width: 24px; height: 24px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">24 · s-6</div></div>
+      <div style="text-align: center;"><div style="width: 32px; height: 32px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">32 · s-8</div></div>
+      <div style="text-align: center;"><div style="width: 48px; height: 48px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">48 · s-12</div></div>
+      <div style="text-align: center;"><div style="width: 64px; height: 64px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">64 · s-16</div></div>
+      <div style="text-align: center;"><div style="width: 96px; height: 96px; background: var(--navy-800); margin: 0 auto;"></div><div class="ds-token" style="margin-top: 8px;">96 · s-24</div></div>
+    </div>
+    <p class="body" style="margin-top: 32px; max-width: 560px;">
+      Section padding: <span class="ds-token">96px</span> ·
+      Container max: <span class="ds-token">1320px</span> ·
+      Container padding: <span class="ds-token">40px</span>.
+    </p>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="ds-section">
+    <div class="ds-label-mono">04 — Componentes · Botones</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Botones</h2>
+    <p class="body" style="margin-top: 12px; max-width: 560px;">Esquinas rectas. Sin radius. Padding 14×22. Inter 500 · 14px.</p>
+
+    <div style="display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; padding: 32px; background: var(--ink-50); border: 1px solid var(--ink-200);">
+      <a class="btn btn-primary" href="#">Solicitar presupuesto <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#">Más detalles</a>
+      <a class="btn btn-light" href="#" style="background: var(--navy-900); color: #fff; border-color: var(--navy-900);">Light on dark</a>
+    </div>
+
+    <div style="display: flex; gap: 16px; margin-top: 16px; padding: 32px; background: var(--navy-900); border: 1px solid var(--navy-900);">
+      <a class="btn btn-light" href="#">Light <span class="arrow">→</span></a>
+      <a class="btn btn-ghost-dark" href="#">Ghost on dark</a>
+    </div>
+  </section>
+
+  <!-- ICONOGRAPHY / EYEBROWS -->
+  <section class="ds-section">
+    <div class="ds-label-mono">05 — Etiquetas técnicas</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Eyebrows e índices</h2>
+    <p class="body" style="margin-top: 12px; max-width: 560px;">
+      Patrón <span class="ds-token">[NN — LABEL]</span> presente en cada sección.
+      Mono caps tracking 0.18em · número en acento naranja.
+    </p>
+    <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 32px; padding: 32px; background: var(--ink-50); border: 1px solid var(--ink-200);">
+      <span class="eyebrow"><span class="num">01</span><span class="dash"></span><span>Servicios</span></span>
+      <span class="eyebrow"><span class="num">02</span><span class="dash"></span><span>Nosotros · 1985</span></span>
+      <span class="eyebrow"><span class="num">03</span><span class="dash"></span><span>Buenos Aires · Argentina</span></span>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="ds-section">
+    <div class="ds-label-mono">06 — Formularios</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Inputs</h2>
+    <p class="body" style="margin-top: 12px; max-width: 560px;">Underline-only. Sin background. Label en mono caps.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; max-width: 720px;">
+      <div class="field">
+        <label class="field-label">Nombre y empresa</label>
+        <input class="field-input" placeholder="Juan Pérez · Acme S.A." />
+      </div>
+      <div class="field">
+        <label class="field-label">Email</label>
+        <input class="field-input" placeholder="juan@acme.com.ar" />
+      </div>
+      <div class="field" style="grid-column: 1 / -1;">
+        <label class="field-label">Mensaje</label>
+        <textarea class="field-input field-textarea" placeholder="Tipo de equipo, urgencia, detalles…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE TAB -->
+  <section class="ds-section">
+    <div class="ds-label-mono">07 — Componentes · Service Tab</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Selector de servicios</h2>
+    <p class="body" style="margin-top: 12px; max-width: 560px;">
+      Tab strip horizontal escalable. Estado activo en navy-800. Estado <em>future</em> con opacidad 0.45.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--ink-200); margin-top: 32px;">
+      <div class="service-tab">
+        <span class="num">01</span>
+        <span class="label">Default</span>
+      </div>
+      <div class="service-tab active">
+        <span class="num">02</span>
+        <span class="label">Activo</span>
+      </div>
+      <div class="service-tab" style="background: var(--ink-50);">
+        <span class="num">03</span>
+        <span class="label">Hover</span>
+      </div>
+      <div class="service-tab future">
+        <span class="num">04</span>
+        <span class="label">Próximamente</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO -->
+  <section class="ds-section">
+    <div class="ds-label-mono">08 — Marca</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Logotipo</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px;">
+      <div style="padding: 64px; background: #fff; border: 1px solid var(--ink-200); display: flex; align-items: center; justify-content: center;">
+        <span class="baltec-logo" style="font-size: 48px; color: var(--navy-900);">Baltec</span>
+      </div>
+      <div style="padding: 64px; background: var(--navy-900); display: flex; align-items: center; justify-content: center;">
+        <span class="baltec-logo" style="font-size: 48px; color: #fff;">Baltec</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="ds-section">
+    <div class="ds-label-mono">09 — Principios</div>
+    <h2 class="h1" style="color: var(--navy-900); margin-top: 12px;">Cómo lo aplicamos</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 32px;">
+      <div style="border-top: 2px solid var(--navy-900); padding-top: 24px;">
+        <div class="h3" style="color: var(--navy-900);">Precisión</div>
+        <p class="body" style="margin-top: 8px;">Cada elemento gana su espacio. Sin decoración. Tracking exacto, alineación a grilla 8pt.</p>
+      </div>
+      <div style="border-top: 2px solid var(--navy-900); padding-top: 24px;">
+        <div class="h3" style="color: var(--navy-900);">Restricción</div>
+        <p class="body" style="margin-top: 8px;">Una familia tipográfica, una paleta navy, esquinas rectas. La disciplina lee como autoridad.</p>
+      </div>
+      <div style="border-top: 2px solid var(--navy-900); padding-top: 24px;">
+        <div class="h3" style="color: var(--navy-900);">Tipografía protagonista</div>
+        <p class="body" style="margin-top: 8px;">Display pesado y compacto. La jerarquía lleva el peso visual sin necesidad de imágenes decorativas.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

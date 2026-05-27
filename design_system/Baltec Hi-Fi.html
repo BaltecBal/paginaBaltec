@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Baltec — Balanceo Dinámico Industrial</title>
+<link rel="stylesheet" href="hifi/styles.css" />
+<style>
+  html, body { margin:0; padding:0; background:#fff; }
+  body { font-family: 'Inter', sans-serif; }
+  .wa-fixed { position: fixed; bottom: 32px; right: 32px; z-index: 100; width: 60px; height: 60px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 12px 32px rgba(37,211,102,0.4); cursor: pointer; }
+  .wa-fixed svg { width: 30px; height: 30px; }
+</style>
+</head>
+<body>
+  <div id="root" class="hf"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="hifi/primitives.jsx"></script>
+  <script type="text/babel" src="hifi/sections.jsx"></script>
+
+  <script type="text/babel">
+    function App() {
+      // Servicios state — interactive selector
+      const [activeSrv, setActiveSrv] = React.useState(0);
+      const [heroVar, setHeroVar] = React.useState('A'); // A=navy, B=light split
+      const [srvVar, setSrvVar] = React.useState('A');   // A=horizontal tabs, B=sidebar
+
+      const InteractiveServicios = () => {
+        const Component = srvVar === 'B' ? ServiciosB : ServiciosA;
+        // For interactivity, override the data passing
+        const [idx, setIdx] = React.useState(srvVar === 'B' ? 1 : 0);
+        return (
+          <section className="section" style={{ background: srvVar==='B' ? 'var(--ink-50)' : '#fff' }}>
+            <div className="container">
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:48 }}>
+                <div style={{ maxWidth:680 }}>
+                  <Eyebrow num="02">Servicios</Eyebrow>
+                  <h2 className="display-3" style={{ marginTop:16, color:'var(--navy-900)' }}>
+                    Soluciones de alta calidad<br/>para mantener su equipamiento<br/>industrial en óptimas condiciones.
+                  </h2>
+                </div>
+                <div className="caption" style={{ fontFamily:'var(--f-mono)', letterSpacing:'.18em', textTransform:'uppercase' }}>
+                  {String(idx+1).padStart(2,'0')} / 06 servicios
+                </div>
+              </div>
+
+              {srvVar === 'A' ? (
+                <>
+                  <div style={{ display:'grid', gridTemplateColumns:'repeat(6, 1fr)', border:'1px solid var(--ink-200)', borderBottom:'none', background:'#fff' }}>
+                    {[
+                      { n:'01', short:'Extractores e inyectores' },
+                      { n:'02', short:'Unidades de tratamiento de aire' },
+                      { n:'03', short:'Bombas de agua' },
+                      { n:'04', short:'Compresores', future:true },
+                      { n:'05', short:'Turbinas a vapor', future:true },
+                      { n:'06', short:'Reductores', future:true },
+                    ].map((s, i) => (
+                      <button key={s.n}
+                        className={`service-tab ${i===idx?'active':''} ${s.future?'future':''}`}
+                        onClick={() => !s.future && setIdx(i)}>
+                        <span className="num">{s.n}</span>
+                        <span className="label">{s.short}</span>
+                        {s.future && <span style={{ fontFamily:'var(--f-mono)', fontSize:10, letterSpacing:'.18em', textTransform:'uppercase', color:'var(--ink-400)' }}>Próximamente</span>}
+                      </button>
+                    ))}
+                  </div>
+                  <ServiceDetail idx={idx} />
+                </>
+              ) : (
+                <div style={{ display:'grid', gridTemplateColumns:'320px 1fr', gap:0, background:'#fff', border:'1px solid var(--ink-200)' }}>
+                  <div style={{ borderRight:'1px solid var(--ink-200)' }}>
+                    {[
+                      { n:'01', short:'Extractores e inyectores' },
+                      { n:'02', short:'Unidades de tratamiento de aire' },
+                      { n:'03', short:'Bombas de agua' },
+                      { n:'04', short:'Compresores', future:true },
+                      { n:'05', short:'Turbinas a vapor', future:true },
+                      { n:'06', short:'Reductores', future:true },
+                    ].map((s, i, arr) => (
+                      <div key={s.n}
+                        onClick={() => !s.future && setIdx(i)}
+                        style={{
+                          display:'flex', alignItems:'center', gap:16,
+                          padding:'20px 24px',
+                          borderBottom: i<arr.length-1 ? '1px solid var(--ink-200)' : 'none',
+                          background: i===idx ? 'var(--navy-800)' : 'transparent',
+                          color: i===idx ? '#fff' : (s.future ? 'var(--ink-400)' : 'var(--ink-800)'),
+                          cursor: s.future ? 'default' : 'pointer'
+                        }}>
+                        <span style={{ fontFamily:'var(--f-mono)', fontSize:12, letterSpacing:'.18em', opacity:.7 }}>{s.n}</span>
+                        <span style={{ fontWeight:500, fontSize:15, flex:1, lineHeight:1.3 }}>{s.short}</span>
+                        {s.future && <span style={{ fontFamily:'var(--f-mono)', fontSize:10, letterSpacing:'.15em', textTransform:'uppercase' }}>Pronto</span>}
+                      </div>
+                    ))}
+                  </div>
+                  <ServiceDetail idx={idx} compact />
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      };
+
+      const ServiceDetail = ({ idx, compact }) => {
+        const data = [
+          { n:'01', long:'Reparación de extractores e inyectores de aire',
+            bullets:['Reparación completa según lo requiera el equipo','Desmontaje, montaje, reparación y fabricación de ejes','Control de excentricidad, colocación y ajuste de rodamientos','Fabricación de poleas, alineación, puesta en marcha y control de vibraciones'] },
+          { n:'02', long:'Reparación de UTA · Unidades de Tratamiento de Aire',
+            bullets:['Trabajo INSITU por complejidad de desmontaje y montaje','Extracción de ejes en turbinas, provisión de componentes','Montajes, ajustes de rodamientos, cambios en motor, alineación','Balanceo dinámico INSITU y control de vibración final'] },
+          { n:'03', long:'Reparación de bombas de agua',
+            bullets:['Desmontaje y montaje de bombas, motores y electrobombas','Control de excentricidad, anillos de compulsión y rodamientos','Provisión de empaquetaduras, sellos mecánicos y modificaciones','Balanceo dinámico de partes rotantes, montaje y control de vibraciones'] },
+        ][idx] || { n:'', long:'', bullets:[] };
+        return (
+          <div style={{ display:'grid', gridTemplateColumns:'1.1fr 1fr', border: compact ? 'none' : '1px solid var(--ink-200)', borderTop: compact ? 'none' : 'none', minHeight:520 }}>
+            <Photo label={data.long} style={{ minHeight:520 }} />
+            <div style={{ padding:'48px 56px', display:'flex', flexDirection:'column' }}>
+              <Eyebrow num={data.n}>Servicio</Eyebrow>
+              <h3 className="h1" style={{ marginTop:16, color:'var(--navy-900)' }}>{data.long}</h3>
+              <div style={{ marginTop:28, flex:1 }}>
+                {data.bullets.map((b, i) => (
+                  <div key={i} className="bullet">
+                    <span className="bullet-num">{String(i+1).padStart(2,'0')}</span>
+                    <span className="bullet-text">{b}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ marginTop:32, display:'flex', gap:12 }}>
+                <a href="#" className="btn btn-primary">Solicitar presupuesto <ArrowRight /></a>
+                <a href="#" className="btn btn-ghost">Más detalles</a>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      return (
+        <>
+          {heroVar === 'A' ? <HeroA /> : <HeroB />}
+          <InteractiveServicios />
+          <Nosotros />
+          <Clientes />
+          <Contacto />
+          <Footer />
+          <a href="#" className="wa-fixed" title="WhatsApp"><WaIcon /></a>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

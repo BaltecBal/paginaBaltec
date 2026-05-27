@@ -1,0 +1,18 @@
+# Hashed build assets — filename changes on every edit → safe to cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images live at stable (unhashed) paths and get replaced occasionally.
+# Fast on repeat visits, but revalidates within a day so updates show up.
+/servicios/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/clientes/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.jpg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/*.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
