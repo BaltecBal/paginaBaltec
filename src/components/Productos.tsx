@@ -3,13 +3,13 @@ import { MessageCircle, FileText, ArrowRight } from 'lucide-react';
 import SEOHead from './SEOHead';
 import { CategoryIcon } from './CategoryIcon';
 import { categories, totalItems, type Product, type Category } from '../data/products';
-import { useHashRoute, isInsideProductos, productosCategoryLink } from '../lib/router';
+import { useHashRoute, productosCategoryLink } from '../lib/router';
 import { safeScrollToId } from '../lib/nav';
 
 const WHATSAPP_NUMBER = '5491535744732';
 const buildWhatsAppLink = (product: Product): string => {
   const text = encodeURIComponent(
-    `Hola, me interesa consultar por "${product.name}" (${product.marca}) del catálogo de productos de Baltec.`
+    `Hola, me interesa consultar por "${product.name}" del catálogo de productos de Baltec.`
   );
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 };
@@ -19,7 +19,6 @@ const INITIAL_VISIBLE = 4;
 
 const Productos = () => {
   const route = useHashRoute();
-  const onProductos = isInsideProductos(route);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -308,19 +307,13 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
 
       <div className="flex flex-col flex-1 p-5">
-        <div className="mb-2 flex items-center flex-wrap gap-x-1.5">
-          <span className="caption uppercase tracking-[0.18em] text-ink-500">
-            {product.marca}
-          </span>
-          {product.tipo && (
-            <>
-              <span className="caption text-ink-300">·</span>
-              <span className="caption uppercase tracking-[0.18em] text-accent">
-                {product.tipo}
-              </span>
-            </>
-          )}
-        </div>
+        {product.tipo && (
+          <div className="mb-2">
+            <span className="caption uppercase tracking-[0.18em] text-accent">
+              {product.tipo}
+            </span>
+          </div>
+        )}
 
         <h3 className="h3 text-navy-900 mb-2 break-words">{product.name}</h3>
         <p className="caption text-ink-500 mb-4 line-clamp-3 flex-1">{product.shortDesc}</p>

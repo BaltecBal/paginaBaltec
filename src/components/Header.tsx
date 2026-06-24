@@ -111,14 +111,16 @@ const Header = () => {
                       handleNavClick(item);
                     }}
                     className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                      isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                      isActive
+                        ? 'text-white font-semibold'
+                        : 'text-white/70 hover:text-white'
                     }`}
                     aria-current={isActive ? 'page' : undefined}
                   >
                     {item.label}
                     {isActive && (
                       <span
-                        className="absolute -bottom-1 left-4 right-4 h-0.5"
+                        className="absolute -bottom-1 left-4 right-4 h-1"
                         style={{ background: 'var(--accent)' }}
                       />
                     )}
@@ -130,14 +132,16 @@ const Header = () => {
                   key={item.id}
                   onClick={() => handleNavClick(item)}
                   className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                    isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                    isActive
+                      ? 'text-white font-semibold'
+                      : 'text-white/70 hover:text-white'
                   }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {item.label}
                   {isActive && (
                     <span
-                      className="absolute -bottom-1 left-4 right-4 h-0.5"
+                      className="absolute -bottom-1 left-4 right-4 h-1"
                       style={{ background: 'var(--accent)' }}
                     />
                   )}

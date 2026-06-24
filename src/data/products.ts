@@ -1,6 +1,9 @@
 // AUTO-GENERATED from the product Excel files (Borneras, Cajas, Capacitores, Impulsores, Turbinas, Ventiladores).
 // Prices and stock counts are intentionally NOT exposed publicly — this is a "show what we have" catalog.
 // Real product images will be added later. The UI renders a neutral tile where an image would go.
+//
+// Total items: 167
+// (21 borneras + 4 cajas + 5 cubrecapacitores + 20 capacitores + 6 impulsores + 14 turbinas + 97 ventiladores)
 
 export interface Product {
   id: string;
@@ -150,62 +153,55 @@ const bornerasItems: Product[] = [
 ].map((p, i) => toProduct(p, 'borneras', i));
 
 // ── Cajas + Cubrecapacitor ──
+// All items here have marca="Valplas" (the provider/brand). The product name is
+// the Detalle field from the Excel.
 const cajasConexion = [
   {
-    "name": "Valplas",
-    "marca": "Motor Blindado C/71",
-    "detalle": "Motor Blindado C/71",
-    "shortDesc": "Caja de conexión con terminales"
+    "name": "Motor Blindado C/71",
+    "marca": "Valplas",
+    "shortDesc": "Caja de conexión para motor blindado (TEFC)"
   },
   {
-    "name": "Valplas",
-    "marca": "Motor Blindado C/80",
-    "detalle": "Motor Blindado C/80",
-    "shortDesc": "Caja de conexión con terminales"
+    "name": "Motor Blindado C/80",
+    "marca": "Valplas",
+    "shortDesc": "Caja de conexión para motor blindado (TEFC)"
   },
   {
-    "name": "Valplas",
-    "marca": "Terminales Diagonal",
-    "detalle": "Terminales Diagonal",
-    "shortDesc": "Caja de conexión con terminales"
+    "name": "Terminales Diagonal",
+    "marca": "Valplas",
+    "shortDesc": "Caja de conexión con terminales en diagonal"
   },
   {
-    "name": "Valplas",
-    "marca": "Terminales Paralelo",
-    "detalle": "Terminales Paralelo",
-    "shortDesc": "Caja de conexión con terminales"
+    "name": "Terminales Paralelo",
+    "marca": "Valplas",
+    "shortDesc": "Caja de conexión con terminales en paralelo"
   }
 ];
 const cubreCapacitor = [
   {
-    "name": "Valplas",
-    "marca": "n38 Terminal Diagonal",
-    "detalle": "n38 Terminal Diagonal",
-    "shortDesc": "Cubre capacitor para protección de bornes y conexiones"
+    "name": "n38 Terminal Diagonal",
+    "marca": "Valplas",
+    "shortDesc": "Cubre capacitor con terminales en diagonal"
   },
   {
-    "name": "Valplas",
-    "marca": "n38 c/ protector enchufe",
-    "detalle": "n38 c/ protector enchufe",
-    "shortDesc": "Cubre capacitor para protección de bornes y conexiones"
+    "name": "n38 c/ protector enchufe",
+    "marca": "Valplas",
+    "shortDesc": "Cubre capacitor con protector de enchufe"
   },
   {
-    "name": "Valplas",
-    "marca": "n38 Terminal Paralelo",
-    "detalle": "n38 Terminal Paralelo",
-    "shortDesc": "Cubre capacitor para protección de bornes y conexiones"
+    "name": "n38 Terminal Paralelo",
+    "marca": "Valplas",
+    "shortDesc": "Cubre capacitor con terminales en paralelo"
   },
   {
-    "name": "Valplas",
-    "marca": "n38 Base Plana",
-    "detalle": "n38 Base Plana",
-    "shortDesc": "Cubre capacitor para protección de bornes y conexiones"
+    "name": "n38 Base Plana",
+    "marca": "Valplas",
+    "shortDesc": "Cubre capacitor con base plana"
   },
   {
-    "name": "Valplas",
-    "marca": "n51 Terminal Paralelo",
-    "detalle": "n51 Terminal Paralelo",
-    "shortDesc": "Cubre capacitor para protección de bornes y conexiones"
+    "name": "n51 Terminal Paralelo",
+    "marca": "Valplas",
+    "shortDesc": "Cubre capacitor con terminales en paralelo"
   }
 ];
 const cajasItems: Product[] = [
@@ -322,22 +318,22 @@ const impulsoresItems: Product[] = [
   {
     "name": "Impulsor Z 0",
     "marca": "Czerweny",
-    "shortDesc": "Impulsor serie Z (Czerweny) — para extractores e inyectores"
+    "shortDesc": "Impulsor serie Z — para extractores e inyectores de aire"
   },
   {
     "name": "Impulsor Z 1",
     "marca": "Czerweny",
-    "shortDesc": "Impulsor serie Z (Czerweny) — para extractores e inyectores"
+    "shortDesc": "Impulsor serie Z — para extractores e inyectores de aire"
   },
   {
     "name": "Impulsor Z 2",
     "marca": "Czerweny",
-    "shortDesc": "Impulsor serie Z (Czerweny) — para extractores e inyectores"
+    "shortDesc": "Impulsor serie Z — para extractores e inyectores de aire"
   },
   {
     "name": "Impulsor Z 3",
     "marca": "Czerweny",
-    "shortDesc": "Impulsor serie Z (Czerweny) — para extractores e inyectores"
+    "shortDesc": "Impulsor serie Z — para extractores e inyectores de aire"
   },
   {
     "name": "Impulsor 32-25-200",
@@ -354,72 +350,72 @@ const impulsoresItems: Product[] = [
 // ── Turbinas ──
 const turbinasItems: Product[] = [
   {
-    "name": "Turbina 160X100+100",
+    "name": "Turbina 160×100 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 160 mm × ancho 100 mm · eje 12.7 mm · rotación derecha"
   },
   {
-    "name": "Turbina 160X100+100",
+    "name": "Turbina 160×100 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 160 mm × ancho 100 mm · eje 12.7 mm · rotación izquierda"
   },
   {
-    "name": "Turbina 180X137,5+137,5",
+    "name": "Turbina 180×137 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 180 mm × ancho 137 mm · eje 12.7 mm · rotación derecha"
   },
   {
-    "name": "Turbina 200X115+115",
+    "name": "Turbina 200×115 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 200 mm × ancho 115 mm · rotación izquierda"
   },
   {
-    "name": "Turbina 240X150+150",
+    "name": "Turbina 240×150 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 240 mm × ancho 150 mm · eje 12.7 mm · rotación izquierda"
   },
   {
-    "name": "Turbina 240X150X150",
+    "name": "Turbina 240×150 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 240 mm × ancho 150 mm · eje 12.7 mm · rotación derecha"
   },
   {
-    "name": "Turbina 250X90X90",
+    "name": "Turbina 250×90 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 250 mm × ancho 90 mm · eje 12.7 mm · rotación derecha"
   },
   {
-    "name": "Turbina 250X90X90",
+    "name": "Turbina 250×90 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 250 mm × ancho 90 mm · eje 12.7 mm · rotación izquierda"
   },
   {
-    "name": "Turbina 300X120X120",
+    "name": "Turbina 300×120 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 300 mm × ancho 120 mm · eje 12.7 mm · rotación izquierda"
   },
   {
-    "name": "Turbina 330X160X160",
+    "name": "Turbina 330×160 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 330 mm × ancho 160 mm · rotación derecha"
   },
   {
-    "name": "Turbina 380X190+190",
+    "name": "Turbina 380×190 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 380 mm × ancho 190 mm · eje 25.4 mm · rotación derecha"
   },
   {
-    "name": "Turbina 380X190+190",
+    "name": "Turbina 380×190 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 380 mm × ancho 190 mm · eje 25.4 mm · rotación izquierda"
   },
   {
-    "name": "Turbina 400X180X180",
+    "name": "Turbina 400×180 DER",
     "marca": "Bimont",
     "shortDesc": "Diámetro 400 mm × ancho 180 mm · rotación derecha"
   },
   {
-    "name": "Turbina 580X260X260",
+    "name": "Turbina 580×260 IZQ",
     "marca": "Bimont",
     "shortDesc": "Diámetro 580 mm × ancho 260 mm · rotación izquierda"
   }
@@ -497,7 +493,7 @@ const ventiladoresItems: Product[] = [
     "name": "143x27",
     "marca": "Angar",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 143x27"
+    "shortDesc": "Ventilador refrigerante estriado — 143x27"
   },
   {
     "name": "128x12",
@@ -545,7 +541,7 @@ const ventiladoresItems: Product[] = [
     "name": "143X27",
     "marca": "Corradi",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 143X27"
+    "shortDesc": "Ventilador refrigerante estriado — 143X27"
   },
   {
     "name": "170x17",
@@ -611,7 +607,7 @@ const ventiladoresItems: Product[] = [
     "name": "190x29",
     "marca": "Corradi",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 190x29"
+    "shortDesc": "Ventilador refrigerante estriado — 190x29"
   },
   {
     "name": "235x34",
@@ -629,7 +625,7 @@ const ventiladoresItems: Product[] = [
     "name": "235x39",
     "marca": "Corradi",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 235x39"
+    "shortDesc": "Ventilador refrigerante estriado — 235x39"
   },
   {
     "name": "235x40",
@@ -647,19 +643,19 @@ const ventiladoresItems: Product[] = [
     "name": "280x44 Estriado",
     "marca": "Corradi",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 280x44 Estriado"
+    "shortDesc": "Ventilador refrigerante estriado — 280x44 Estriado"
   },
   {
     "name": "143 Estriado",
     "marca": "Corradi",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 143 Estriado"
+    "shortDesc": "Ventilador refrigerante estriado — 143 Estriado"
   },
   {
     "name": "170 Estriado",
     "marca": "Corradi",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 170 Estriado"
+    "shortDesc": "Ventilador refrigerante estriado — 170 Estriado"
   },
   {
     "name": "120x9,5",
@@ -989,7 +985,7 @@ const ventiladoresItems: Product[] = [
     "name": "190x29",
     "marca": "T.Adaptable",
     "tipo": "Estriado",
-    "shortDesc": "Ventilador estriado — 190x29"
+    "shortDesc": "Ventilador refrigerante estriado — 190x29"
   },
   {
     "name": "160X19",
@@ -1015,13 +1011,13 @@ export const categories: Category[] = [
   {
     id: 'borneras',
     name: 'Borneras',
-    description: 'Bornes de conexión para motores eléctricos de baja tensión. Compatibles con las principales marcas del mercado (Corradi, Czerweny, Marelli, MotorMech, Siemens, Weg).',
+    description: 'Bornes de conexión para motores eléctricos de baja tensión. Compatibles con carcasas C/63 a C/132 y múltiples líneas normalizadas.',
     items: bornerasItems,
   },
   {
     id: 'cajas',
     name: 'Cajas de conexión y cubrecapacitor',
-    description: 'Cajas y cubre-capacitores para protección y conexión de motores monofásicos. Marca Valplas.',
+    description: 'Cajas y cubre-capacitores para protección y conexión de motores monofásicos, con terminales en diagonal, paralelo y base plana.',
     items: cajasItems,
   },
   {
@@ -1033,19 +1029,19 @@ export const categories: Category[] = [
   {
     id: 'impulsores',
     name: 'Impulsores',
-    description: 'Impulsores para extractores e inyectores de aire. Serie Z y modelos específicos Czerweny.',
+    description: 'Impulsores para extractores e inyectores de aire. Serie Z y modelos específicos de geometría abierta.',
     items: impulsoresItems,
   },
   {
     id: 'turbinas',
     name: 'Turbinas',
-    description: 'Turbinas industriales de alto caudal marca Bimont, en distintas dimensiones y sentidos de rotación.',
+    description: 'Turbinas industriales de alto caudal en distintas dimensiones y sentidos de rotación (derecha e izquierda).',
     items: turbinasItems,
   },
   {
     id: 'ventiladores',
     name: 'Ventiladores',
-    description: 'Ventiladores refrigerantes y estriados para motores eléctricos. Múltiples marcas y medidas estándar del mercado.',
+    description: 'Ventiladores refrigerantes y estriados para motores eléctricos. Múltiples medidas estándar del mercado.',
     items: ventiladoresItems,
   },
 ];

@@ -4,24 +4,19 @@ import SEOHead from './SEOHead';
 import { CategoryIcon } from './CategoryIcon';
 import { categories, type Product, type Category } from '../data/products';
 import {
+  useHashRoute,
   navigateProductos,
+  navigateProductosCategory,
   productosCategoryLink,
 } from '../lib/router';
+import { safeScrollToId } from '../lib/nav';
 
 const WHATSAPP_NUMBER = '5491535744732';
 const buildWhatsAppLink = (product: Product): string => {
   const text = encodeURIComponent(
-    `Hola, me interesa consultar por "${product.name}" (${product.marca}) del catálogo de productos de Baltec.`
+    `Hola, me interesa consultar por "${product.name}" del catálogo de productos de Baltec.`
   );
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-};
-
-const scrollToContact = (): void => {
-  const element = document.getElementById('contacto');
-  if (element) {
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-    window.scrollTo({ top: elementPosition - 60, behavior: 'smooth' });
-  }
 };
 
 interface ProductosCategoryProps {
@@ -29,6 +24,9 @@ interface ProductosCategoryProps {
 }
 
 const ProductosCategory = ({ categoryId }: ProductosCategoryProps) => {
+  const route = useHashRoute();
+  const goToContact = () => safeScrollToId('contacto', route);
+
   const category = useMemo(
     () => categories.find((c) => c.id === categoryId) || null,
     [categoryId]
@@ -81,12 +79,18 @@ const ProductosCategory = ({ categoryId }: ProductosCategoryProps) => {
     );
   }
 
-  return <CategoryView category={category} />;
+  return <CategoryView category={category} goToContact={goToContact} />;
 };
 
 // ── Category view ───────────────────────────────────────────
 
-const CategoryView = ({ category }: { category: Category }) => {
+const CategoryView = ({
+  category,
+  goToContact,
+}: {
+  category: Category;
+  goToContact: () => void;
+}) => {
   const isVentiladores = category.id === 'ventiladores';
   const isCajas = category.id === 'cajas';
 
@@ -137,61 +141,90 @@ const CategoryView = ({ category }: { category: Category }) => {
       />
 
       <main className="bg-paper">
-        {/* ── Hero ─────────────────────────────────────── */}
+        {/* ── Hero ─ same pattern as the index page (proven to work) ── */}
         <section
-          className="pt-24 pb-10 md:pt-28 md:pb-12"
+          className="pt-28 pb-10 md:pt-32 md:pb-12"
           style={{ background: 'var(--navy-800)' }}
         >
           <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-            {/* Breadcrumb */}
-            <nav
-              aria-label="Navegación"
-              className="mb-8 flex items-center gap-2 caption uppercase tracking-[0.18em] text-white/60"
-            >
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+              <div className="max-w-2xl flex items-center gap-4">
+                <div
+                  className="hidden md:flex items-center justify-center w-12 h-12 flex-shrink-0 text-white/80"
+                  aria-hidden="true"
+                >
+                  <CategoryIcon categoryId={category.id} className="w-10 h-10" />
+                </div>
+                <div className="min-w-0">
+                  <span className="eyebrow text-white/60 mb-2 inline-flex">
+                    <span className="num text-accent">·</span>
+                    <span className="dash bg-white/40" />
+                    <span>Categoría</span>
+                  </span>
+                  <h1 className="text-2xl md:text-4xl font-semibold text-white truncate leading-tight">
+                    {category.name}
+                  </h1>
+                </div>
+              </div>
+              <div className="flex items-baseline gap-2 text-white/70 flex-shrink-0">
+                <span className="font-mono text-xl text-white">{totalShown}</span>
+                <span className="caption uppercase tracking-[0.18em]">
+                  {totalShown === 1 ? 'producto' : 'productos'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Toolbar: back + category switcher ─────────── */}
+        <section
+          aria-label="Barra de navegación de categoría"
+          className="bg-paper border-b border-ink-200"
+        >
+          <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-4">
+            <div className="flex flex-col gap-3">
+              {/* Back link — on top, prominent */}
               <button
                 type="button"
                 onClick={navigateProductos}
-                className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+                className="group inline-flex items-center gap-2 text-navy-800 hover:text-accent transition-colors duration-200 self-start"
+                aria-label="Volver al catálogo"
               >
-                <ArrowLeft className="w-3 h-3" />
-                Catálogo
+                <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+                <span className="caption uppercase tracking-[0.18em]">
+                  Volver al catálogo
+                </span>
               </button>
-              <span className="text-white/30">/</span>
-              <span className="text-white">{category.name}</span>
-            </nav>
 
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-              <div className="max-w-2xl">
-                <div className="flex items-end gap-4">
-                  <div
-                    className="hidden md:flex items-center justify-center w-12 h-12 mb-1 text-white/80"
-                    aria-hidden="true"
-                  >
-                    <CategoryIcon categoryId={category.id} className="w-10 h-10" />
-                  </div>
-                  <div>
-                    <span className="eyebrow text-white/60 mb-3 inline-flex">
-                      <span className="num text-accent">·</span>
-                      <span className="dash bg-white/40" />
-                      <span>Categoría</span>
-                    </span>
-                    <h1 className="display-3 md:display-2 text-white">
-                      {category.name}
-                    </h1>
-                  </div>
+              {/* Category switcher */}
+              <nav aria-label="Cambiar de categoría">
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((c) => {
+                    const isActive = c.id === category.id;
+                    return (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => navigateProductosCategory(c.id)}
+                        className={`group inline-flex items-center gap-2 px-3 py-1.5 border text-sm transition-colors duration-200 ${
+                          isActive
+                            ? 'border-navy-800 text-white bg-navy-800'
+                            : 'border-ink-200 text-ink-800 hover:border-navy-800 hover:text-navy-800'
+                        }`}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        <CategoryIcon
+                        categoryId={c.id}
+                        className={`w-4 h-4 ${isActive ? 'text-accent' : 'text-ink-500'}`}
+                      />
+                      <span className="caption uppercase tracking-[0.14em] text-xs">
+                        {c.name}
+                      </span>
+                    </button>
+                  );
+                })}
                 </div>
-                <p className="body text-white/70 mt-4 max-w-xl">
-                  {category.description}
-                </p>
-              </div>
-              <div className="flex items-center gap-6 text-white/70 flex-shrink-0">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-xl text-white">{totalShown}</span>
-                  <span className="caption uppercase tracking-[0.18em]">
-                    {totalShown === 1 ? 'producto' : 'productos'}
-                  </span>
-                </div>
-              </div>
+              </nav>
             </div>
           </div>
         </section>
@@ -306,7 +339,7 @@ const CategoryView = ({ category }: { category: Category }) => {
                 </a>
                 <button
                   type="button"
-                  onClick={scrollToContact}
+                  onClick={goToContact}
                   className="btn btn-ghost-dark"
                 >
                   <FileText className="w-4 h-4" />
@@ -325,6 +358,9 @@ const CategoryView = ({ category }: { category: Category }) => {
 // ── Product card (shared — duplicated here to keep this component self-contained) ─
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const route = useHashRoute();
+  const goToContact = () => safeScrollToId('contacto', route);
+
   const categoryFromId = (id: string): string => {
     if (id.startsWith('borneras')) return 'borneras';
     if (id.startsWith('caja-conexion') || id.startsWith('cubre-cap')) return 'cajas';
@@ -359,19 +395,13 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
 
       <div className="flex flex-col flex-1 p-5">
-        <div className="mb-2 flex items-center flex-wrap gap-x-1.5">
-          <span className="caption uppercase tracking-[0.18em] text-ink-500">
-            {product.marca}
-          </span>
-          {product.tipo && (
-            <>
-              <span className="caption text-ink-300">·</span>
-              <span className="caption uppercase tracking-[0.18em] text-accent">
-                {product.tipo}
-              </span>
-            </>
-          )}
-        </div>
+        {product.tipo && (
+          <div className="mb-2">
+            <span className="caption uppercase tracking-[0.18em] text-accent">
+              {product.tipo}
+            </span>
+          </div>
+        )}
 
         <h3 className="h3 text-navy-900 mb-2 break-words">{product.name}</h3>
         <p className="caption text-ink-500 mb-4 line-clamp-3 flex-1">{product.shortDesc}</p>
@@ -390,7 +420,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           </a>
           <button
             type="button"
-            onClick={scrollToContact}
+            onClick={goToContact}
             className="btn btn-ghost flex-1 justify-center"
             style={{ padding: '10px 12px', fontSize: '13px' }}
             aria-label={`Pedir cotización de ${product.name}`}
