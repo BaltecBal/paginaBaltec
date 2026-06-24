@@ -1,5 +1,13 @@
 import { useEffect } from 'react';
 
+interface SEOHeadProps {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'ProfessionalService'],
@@ -135,16 +143,69 @@ const injectSchema = (id: string, data: object) => {
   document.head.appendChild(script);
 };
 
-const SEOHead = () => {
+const setMeta = (selector: string, content: string): void => {
+  let el = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!el) {
+    el = document.createElement('meta');
+    const [, attr, value] = selector.match(/\[(.*?)="(.*?)"\]/) || [];
+    if (attr && value) {
+      el.setAttribute(attr, value);
+    }
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+};
+
+const setLink = (rel: string, href: string): void => {
+  let el = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', rel);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', href);
+};
+
+const SEOHead = ({
+  title,
+  description,
+  keywords,
+  canonical,
+  ogImage,
+}: SEOHeadProps = {}) => {
   useEffect(() => {
+    // Always inject business + organization schemas (global)
     injectSchema('schema-local-business', localBusinessSchema);
     injectSchema('schema-organization', organizationSchema);
+
+    // If per-route props are provided, override the default meta tags
+    if (title) {
+      document.title = title;
+      setMeta('meta[property="og:title"]', title);
+      setMeta('meta[name="twitter:title"]', title);
+    }
+    if (description) {
+      setMeta('meta[name="description"]', description);
+      setMeta('meta[property="og:description"]', description);
+      setMeta('meta[name="twitter:description"]', description);
+    }
+    if (keywords) {
+      setMeta('meta[name="keywords"]', keywords);
+    }
+    if (canonical) {
+      setLink('canonical', canonical);
+      setMeta('meta[property="og:url"]', canonical);
+    }
+    if (ogImage) {
+      setMeta('meta[property="og:image"]', ogImage);
+      setMeta('meta[name="twitter:image"]', ogImage);
+    }
 
     return () => {
       document.getElementById('schema-local-business')?.remove();
       document.getElementById('schema-organization')?.remove();
     };
-  }, []);
+  }, [title, description, keywords, canonical, ogImage]);
 
   return null;
 };

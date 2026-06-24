@@ -1,10 +1,22 @@
 import { Mail, Phone, MapPin, MessageSquare, Clock } from 'lucide-react';
+import { useHashRoute, isInsideProductos } from '../lib/router';
+import { safeScrollToId } from '../lib/nav';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const route = useHashRoute();
+  const onProductos = isInsideProductos(route);
 
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    safeScrollToId(id, route);
+  };
+
+  const handleHomeClick = (label: string) => {
+    if (label === 'Inicio' && onProductos) {
+      window.location.hash = '';
+      return;
+    }
+    scrollToSection(label.toLowerCase());
   };
 
   return (
@@ -29,7 +41,7 @@ const Footer = () => {
               {['Inicio', 'Servicios', 'Nosotros', 'Clientes', 'Contacto'].map(label => (
                 <button
                   key={label}
-                  onClick={() => scrollToSection(label.toLowerCase())}
+                  onClick={() => handleHomeClick(label)}
                   className="text-left text-white/70 hover:text-white transition-colors text-sm"
                 >
                   {label}
