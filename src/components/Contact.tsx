@@ -53,7 +53,8 @@ const Contact = () => {
 
   const contactInfo = [
     { icon: Phone, label: 'Teléfono', value: '011 4919-9922' },
-    { icon: MessageSquare, label: 'WhatsApp', value: '15 3574-4732' },
+    { icon: MessageSquare, label: 'WhatsApp Administración', value: '15 3574-4732' },
+    { icon: MessageSquare, label: 'WhatsApp Ventas', value: '11 4979-7144' },
     { icon: Mail, label: 'Email', value: 'info@balanceobaltec.com' },
     { icon: MapPin, label: 'Dirección', value: 'Av. Del Barco Centenera 3405, Buenos Aires' },
     { icon: Clock, label: 'Horario', value: 'Lunes a Viernes · 8:00-12:00 y 13:00-17:00' },

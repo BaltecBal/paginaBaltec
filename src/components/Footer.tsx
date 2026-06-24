@@ -58,7 +58,16 @@ const Footer = () => {
                 className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
               >
                 <MessageSquare className="w-4 h-4 text-ink-300 flex-shrink-0" />
-                <span>15 3574-4732</span>
+                <span>Administración: 15 3574-4732</span>
+              </a>
+              <a
+                href="https://wa.me/5491149797144"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+              >
+                <MessageSquare className="w-4 h-4 text-ink-300 flex-shrink-0" />
+                <span>Ventas: 11 4979-7144</span>
               </a>
               <a
                 href="mailto:info@balanceobaltec.com"
