@@ -158,18 +158,21 @@ const Header = () => {
               Productos <span className="arrow">→</span>
             </button>
 
-            {/* Cart icon */}
+            {/* Cart icon (desktop) */}
             <CartIcon variant="header" className="ml-2" />
           </nav>
 
-          {/* Mobile burger */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-white"
-            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile top-right: cart + burger */}
+          <div className="md:hidden flex items-center gap-1">
+            <CartIcon variant="header" />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-white"
+              aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -177,11 +180,6 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden border-t border-white/10" style={{ background: 'var(--navy-900)' }}>
           <div className="max-w-[1320px] mx-auto px-6 py-4 flex flex-col gap-1">
-            <CartIcon
-              variant="mobile"
-              onClick={() => setIsMenuOpen(false)}
-            />
-            <div className="border-t border-white/10 my-2" />
             {NAV_ITEMS.map((item) => {
               const isActive = isItemActive(item);
               if (item.isRoute) {

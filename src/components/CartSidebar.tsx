@@ -98,30 +98,29 @@ const CartSidebar = () => {
               </p>
             </div>
           ) : (
-            <ul className="flex flex-col list-none">
+            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-x-3 gap-y-3 list-none">
               {items.map((item) => (
                 <li
                   key={item.id}
-                  className="py-5 flex gap-3 border-b border-ink-100 last:border-b-0"
+                  className="py-3 px-3 sm:py-5 sm:px-0 border border-ink-100 sm:border-0 sm:border-b sm:last:border-b-0"
                 >
                   <div className="flex-1 min-w-0">
-                    <h3 className="h3 text-navy-900 break-words mb-1">{item.name}</h3>
-                    <p className="caption text-ink-500 line-clamp-2">{item.shortDesc}</p>
+                    <h3 className="text-[13px] sm:text-base font-semibold text-navy-900 break-words leading-tight line-clamp-2 mb-2">{item.name}</h3>
 
-                    <div className="flex items-center justify-between mt-3">
-                      {/* Quantity stepper */}
+                    <div className="flex items-center justify-between gap-1.5">
+                      {/* Quantity stepper — compact on mobile */}
                       <div className="inline-flex items-center border border-ink-200">
                         <button
                           type="button"
                           onClick={() => setQuantity(item.id, item.quantity - 1)}
                           disabled={item.quantity <= 1}
-                          className="inline-flex items-center justify-center w-10 h-10 text-ink-800 hover:text-navy-800 hover:bg-ink-100 disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
+                          className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 text-ink-800 hover:text-navy-800 hover:bg-ink-100 disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
                           aria-label={`Disminuir cantidad de ${item.name}`}
                         >
-                          <Minus className="w-4 h-4" />
+                          <Minus className="w-3.5 h-3.5" />
                         </button>
                         <span
-                          className="inline-flex items-center justify-center min-w-[44px] h-10 font-mono text-base text-navy-900 border-x border-ink-200"
+                          className="inline-flex items-center justify-center min-w-[32px] sm:min-w-[44px] h-8 sm:h-10 font-mono text-sm sm:text-base text-navy-900 border-x border-ink-200"
                           aria-label={`Cantidad actual: ${item.quantity}`}
                         >
                           {item.quantity}
@@ -130,10 +129,10 @@ const CartSidebar = () => {
                           type="button"
                           onClick={() => setQuantity(item.id, item.quantity + 1)}
                           disabled={item.quantity >= 99}
-                          className="inline-flex items-center justify-center w-10 h-10 text-ink-800 hover:text-navy-800 hover:bg-ink-100 disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
+                          className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 text-ink-800 hover:text-navy-800 hover:bg-ink-100 disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
                           aria-label={`Aumentar cantidad de ${item.name}`}
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus className="w-3.5 h-3.5" />
                         </button>
                       </div>
 
@@ -141,12 +140,14 @@ const CartSidebar = () => {
                       <button
                         type="button"
                         onClick={() => remove(item.id)}
-                        className="inline-flex items-center justify-center w-10 h-10 text-ink-500 hover:text-accent hover:bg-ink-100 transition-colors"
+                        className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 text-ink-500 hover:text-accent hover:bg-ink-100 transition-colors"
                         aria-label={`Quitar ${item.name} del carrito`}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
+
+                    <p className="caption text-ink-500 line-clamp-2 hidden sm:block mt-2">{item.shortDesc}</p>
                   </div>
                 </li>
               ))}
