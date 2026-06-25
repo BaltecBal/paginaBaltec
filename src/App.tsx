@@ -11,7 +11,11 @@ import WhatsAppFAB from './components/WhatsAppFAB';
 import SEOHead from './components/SEOHead';
 import Productos from './components/Productos';
 import ProductosCategory from './components/ProductosCategory';
+import CartSidebar from './components/CartSidebar';
+import CartBanner from './components/CartBanner';
+import ErrorBoundary from './components/ErrorBoundary';
 import { ToastProvider } from './components/ui/Toast';
+import { CartProvider } from './lib/cart';
 import {
   useHashRoute,
   isProductosIndex,
@@ -24,29 +28,35 @@ function App() {
   const { isCategory, categoryId } = isProductosCategory(route);
 
   return (
-    <ToastProvider>
-      <SEOHead />
-      <div className="bg-paper min-h-screen">
-        <Header />
-        {onProductosIndex ? (
-          <Productos />
-        ) : isCategory ? (
-          <ProductosCategory categoryId={categoryId} />
-        ) : (
-          <>
-            <Hero />
-            <Services />
-            <Problems />
-            <About />
-            <Clients />
-            <Contact />
-            <FAQ />
-          </>
-        )}
-        <Footer />
-        <WhatsAppFAB />
-      </div>
-    </ToastProvider>
+    <ErrorBoundary>
+      <ToastProvider>
+        <CartProvider>
+          <SEOHead />
+          <div className="bg-paper min-h-screen">
+            <Header />
+            {onProductosIndex ? (
+              <Productos />
+            ) : isCategory ? (
+              <ProductosCategory categoryId={categoryId} />
+            ) : (
+              <>
+                <Hero />
+                <Services />
+                <Problems />
+                <About />
+                <Clients />
+                <Contact />
+                <FAQ />
+              </>
+            )}
+            <Footer />
+            <WhatsAppFAB />
+            <CartSidebar />
+            <CartBanner />
+          </div>
+        </CartProvider>
+      </ToastProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { MessageCircle, FileText, ArrowRight } from 'lucide-react';
 import SEOHead from './SEOHead';
 import { CategoryIcon } from './CategoryIcon';
+import ProductCard from './ProductCard';
 import { categories, totalItems, type Product, type Category } from '../data/products';
 import { useHashRoute, productosCategoryLink } from '../lib/router';
 import { safeScrollToId } from '../lib/nav';
@@ -267,83 +268,6 @@ const SeeAllCategoryLink = ({
   </a>
 );
 
-// ── Product card ─────────────────────────────────────────────
-
-const ProductCard = ({ product }: { product: Product }) => {
-  const route = useHashRoute();
-  const goToContact = () => safeScrollToId('contacto', route);
-
-  const categoryFromId = (id: string): string => {
-    if (id.startsWith('borneras')) return 'borneras';
-    if (id.startsWith('caja-conexion') || id.startsWith('cubre-cap')) return 'cajas';
-    if (id.startsWith('cap')) return 'capacitores';
-    if (id.startsWith('imp')) return 'impulsores';
-    if (id.startsWith('turb')) return 'turbinas';
-    if (id.startsWith('vent')) return 'ventiladores';
-    return 'cajas';
-  };
-
-  return (
-    <article
-      className="group relative flex flex-col h-full border border-ink-200 bg-white transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgba(20,45,99,0.25)] hover:border-navy-800 focus-within:-translate-y-0.5 focus-within:shadow-[0_12px_32px_-12px_rgba(20,45,99,0.25)] focus-within:border-navy-800"
-    >
-      <div className="relative aspect-[16/10] bg-ink-100 overflow-hidden border-b border-ink-200">
-        {product.image ? (
-          <img
-            src={product.image}
-            alt={product.name}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-navy-800 transition-transform duration-500 ease-out group-hover:scale-105">
-            <CategoryIcon
-              categoryId={categoryFromId(product.id)}
-              className="w-16 h-16"
-            />
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-col flex-1 p-5">
-        {product.tipo && (
-          <div className="mb-2">
-            <span className="caption uppercase tracking-[0.18em] text-accent">
-              {product.tipo}
-            </span>
-          </div>
-        )}
-
-        <h3 className="h3 text-navy-900 mb-2 break-words">{product.name}</h3>
-        <p className="caption text-ink-500 mb-4 line-clamp-3 flex-1">{product.shortDesc}</p>
-
-        <div className="flex gap-2 mt-auto pt-4 border-t border-ink-100">
-          <a
-            href={buildWhatsAppLink(product)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary flex-1 justify-center"
-            style={{ padding: '10px 12px', fontSize: '13px' }}
-            aria-label={`Consultar por WhatsApp sobre ${product.name}`}
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
-            WhatsApp
-          </a>
-          <button
-            type="button"
-            onClick={goToContact}
-            className="btn btn-ghost flex-1 justify-center"
-            style={{ padding: '10px 12px', fontSize: '13px' }}
-            aria-label={`Pedir cotización de ${product.name}`}
-          >
-            <FileText className="w-3.5 h-3.5" />
-            Cotizar
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-};
+// ── Product card (shared component) ───────────────────────────
 
 export default Productos;

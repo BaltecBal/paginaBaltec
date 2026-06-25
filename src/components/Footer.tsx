@@ -73,7 +73,7 @@ const Footer = () => {
                 <span>Administración: 15 3574-4732</span>
               </a>
               <a
-                href="https://wa.me/5491149797144"
+                href="https://wa.me/541149397144"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"

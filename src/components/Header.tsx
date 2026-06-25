@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useHashRoute, isInsideProductos, PRODUCTOS_LINK, navigateProductos } from '../lib/router';
 import { safeScrollToId } from '../lib/nav';
+import CartIcon from './CartIcon';
 
 const NAV_ITEMS = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'servicios', label: 'Servicios' },
-  { id: 'productos', label: 'Productos', isRoute: true },
   { id: 'nosotros', label: 'Nosotros' },
   { id: 'clientes', label: 'Clientes' },
   { id: 'contacto', label: 'Contacto' },
@@ -149,13 +149,17 @@ const Header = () => {
               );
             })}
 
-            {/* Presupuesto CTA */}
+            {/* Productos CTA */}
             <button
-              onClick={() => handleNavClick({ id: 'contacto' } as typeof NAV_ITEMS[number])}
+              onClick={navigateProductos}
               className="ml-4 btn btn-ghost-dark"
+              aria-current={onProductos ? 'page' : undefined}
             >
-              Presupuesto <span className="arrow">→</span>
+              Productos <span className="arrow">→</span>
             </button>
+
+            {/* Cart icon */}
+            <CartIcon variant="header" className="ml-2" />
           </nav>
 
           {/* Mobile burger */}
@@ -173,6 +177,11 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden border-t border-white/10" style={{ background: 'var(--navy-900)' }}>
           <div className="max-w-[1320px] mx-auto px-6 py-4 flex flex-col gap-1">
+            <CartIcon
+              variant="mobile"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <div className="border-t border-white/10 my-2" />
             {NAV_ITEMS.map((item) => {
               const isActive = isItemActive(item);
               if (item.isRoute) {
@@ -206,11 +215,13 @@ const Header = () => {
             })}
             <button
               onClick={() => {
-                handleNavClick({ id: 'contacto' } as typeof NAV_ITEMS[number]);
+                setIsMenuOpen(false);
+                navigateProductos();
               }}
               className="mt-2 btn btn-light w-full justify-center"
+              aria-current={onProductos ? 'page' : undefined}
             >
-              Solicitar presupuesto <span className="arrow">→</span>
+              Productos <span className="arrow">→</span>
             </button>
           </div>
         </div>
