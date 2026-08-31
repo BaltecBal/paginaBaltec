@@ -3,7 +3,8 @@ import { MessageCircle, FileText, ArrowLeft, ArrowRight } from 'lucide-react';
 import SEOHead from './SEOHead';
 import { CategoryIcon } from './CategoryIcon';
 import ProductCard from './ProductCard';
-import { categories, type Product, type Category } from '../data/products';
+import { type Product, type Category } from '../data/products';
+import { useCatalog } from '../lib/catalog';
 import {
   useHashRoute,
   navigateProductos,
@@ -27,10 +28,16 @@ interface ProductosCategoryProps {
 const ProductosCategory = ({ categoryId }: ProductosCategoryProps) => {
   const route = useHashRoute();
   const goToContact = () => safeScrollToId('contacto', route);
+  const { categories } = useCatalog();
 
+  // Exact id first; then first-slug-segment so old short links ("cajas") keep
+  // resolving against the live catalog's full-slug ids.
   const category = useMemo(
-    () => categories.find((c) => c.id === categoryId) || null,
-    [categoryId]
+    () =>
+      categories.find((c) => c.id === categoryId) ||
+      (categoryId ? categories.find((c) => c.id.split('-')[0] === categoryId) : null) ||
+      null,
+    [categories, categoryId]
   );
 
   useEffect(() => {
@@ -92,8 +99,10 @@ const CategoryView = ({
   category: Category;
   goToContact: () => void;
 }) => {
-  const isVentiladores = category.id === 'ventiladores';
-  const isCajas = category.id === 'cajas';
+  // For the "otras categorías" switcher.
+  const { categories } = useCatalog();
+  const isVentiladores = category.id.startsWith('ventiladores');
+  const isCajas = category.id.startsWith('cajas');
 
   const [tipoFilter, setTipoFilter] = useState<'all' | 'Refrigerante' | 'Estriado'>('all');
 
@@ -284,7 +293,7 @@ const CategoryView = ({
                     >
                       {groupItems.map((product) => (
                         <li key={product.id}>
-                          <ProductCard product={product} />
+                          <ProductCard product={product} categoryId={category.id} />
                         </li>
                       ))}
                     </ul>
@@ -298,7 +307,7 @@ const CategoryView = ({
               >
                 {filteredItems.map((product) => (
                   <li key={product.id}>
-                    <ProductCard product={product} />
+                    <ProductCard product={product} categoryId={category.id} />
                   </li>
                 ))}
               </ul>

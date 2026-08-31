@@ -6,6 +6,9 @@ import { useCart } from '../lib/cart';
 
 interface ProductCardProps {
   product: Product;
+  /** Category slug for the placeholder icon. Falls back to sniffing the
+   * bundled data's id prefixes when absent. */
+  categoryId?: string;
 }
 
 const categoryFromId = (id: string): string => {
@@ -18,7 +21,7 @@ const categoryFromId = (id: string): string => {
   return 'cajas';
 };
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, categoryId }: ProductCardProps) => {
   const { items, add, remove, setQuantity } = useCart();
   const cartItem = items.find((i) => i.id === product.id);
   const inCart = !!cartItem;
@@ -48,7 +51,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-navy-800 transition-transform duration-500 ease-out group-hover:scale-105">
             <CategoryIcon
-              categoryId={categoryFromId(product.id)}
+              categoryId={categoryId ?? categoryFromId(product.id)}
               className="w-16 h-16"
             />
           </div>

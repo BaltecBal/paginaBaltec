@@ -3,7 +3,8 @@ import { MessageCircle, FileText, ArrowRight } from 'lucide-react';
 import SEOHead from './SEOHead';
 import { CategoryIcon } from './CategoryIcon';
 import ProductCard from './ProductCard';
-import { categories, totalItems, type Product, type Category } from '../data/products';
+import { type Product, type Category } from '../data/products';
+import { useCatalog } from '../lib/catalog';
 import { useHashRoute, productosCategoryLink } from '../lib/router';
 import { safeScrollToId } from '../lib/nav';
 
@@ -20,6 +21,7 @@ const INITIAL_VISIBLE = 4;
 
 const Productos = () => {
   const route = useHashRoute();
+  const { categories, totalItems } = useCatalog();
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -135,7 +137,9 @@ interface CategorySectionProps {
 }
 
 const CategorySection = ({ category, idx }: CategorySectionProps) => {
-  const isCajas = category.id === 'cajas';
+  // Prefix match: the live catalog serves full-slug ids ("cajas-de-conexion-…")
+  // while the bundled fallback uses the short "cajas".
+  const isCajas = category.id.startsWith('cajas');
 
   // Cajas: sub-group split (only first 4 of each on the index)
   const subGroups = useMemo(() => {
@@ -201,7 +205,7 @@ const CategorySection = ({ category, idx }: CategorySectionProps) => {
                   >
                     {visibleGroup.map((product) => (
                       <li key={product.id}>
-                        <ProductCard product={product} />
+                        <ProductCard product={product} categoryId={category.id} />
                       </li>
                     ))}
                   </ul>
@@ -226,7 +230,7 @@ const CategorySection = ({ category, idx }: CategorySectionProps) => {
             >
               {visibleItems.map((product) => (
                 <li key={product.id}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} categoryId={category.id} />
                 </li>
               ))}
             </ul>

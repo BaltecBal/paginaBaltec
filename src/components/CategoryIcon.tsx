@@ -140,7 +140,9 @@ export const CategoryIcon = ({
   categoryId: string;
   className?: string;
 }): ReactElement => {
-  switch (categoryId) {
+  // First slug segment: matches both the bundled short ids ("cajas") and the
+  // live catalog's full slugs ("cajas-de-conexion-y-cubrecapacitor").
+  switch (categoryId.split('-')[0]) {
     case 'borneras':
       return <BornerasIcon className={className} />;
     case 'cajas':
