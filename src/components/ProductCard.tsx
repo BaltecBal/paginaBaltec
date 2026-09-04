@@ -39,7 +39,7 @@ const ProductCard = ({ product, categoryId }: ProductCardProps) => {
         inCart ? 'border border-navy-800' : 'border border-ink-200 hover:border-navy-800 focus-within:border-navy-800'
       }`}
     >
-      <div className="relative aspect-[16/10] bg-ink-100 overflow-hidden border-b border-ink-200">
+      <div className="relative aspect-[16/9] sm:aspect-[16/10] bg-ink-100 overflow-hidden border-b border-ink-200">
         {product.image ? (
           <img
             src={product.image}
@@ -66,7 +66,7 @@ const ProductCard = ({ product, categoryId }: ProductCardProps) => {
         )}
       </div>
 
-      <div className="flex flex-col flex-1 p-5">
+      <div className="flex flex-col flex-1 p-3 sm:p-5">
         {product.tipo && (
           <div className="mb-2">
             <span className="caption uppercase tracking-[0.18em] text-accent">
@@ -75,8 +75,8 @@ const ProductCard = ({ product, categoryId }: ProductCardProps) => {
           </div>
         )}
 
-        <h3 className="h3 text-navy-900 mb-2 break-words">{product.name}</h3>
-        <p className="caption text-ink-500 mb-4 line-clamp-3 flex-1">{product.shortDesc}</p>
+        <h3 className="text-sm sm:text-xl font-semibold leading-snug text-navy-900 mb-1.5 sm:mb-2 break-words">{product.name}</h3>
+        <p className="text-xs sm:text-[13px] leading-snug sm:leading-normal text-ink-500 mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-3 flex-1">{product.shortDesc}</p>
 
         {inCart ? (
           <div className="mt-auto pt-4 border-t border-ink-100">
@@ -125,10 +125,9 @@ const ProductCard = ({ product, categoryId }: ProductCardProps) => {
             <button
               type="button"
               onClick={handleAdd}
-              className={`btn w-full justify-center transition-colors duration-200 ${
+              className={`btn w-full justify-center transition-colors duration-200 text-xs sm:text-sm whitespace-nowrap px-2 min-h-[40px] sm:min-h-[44px] ${
                 justAdded ? 'btn-light' : 'btn-primary'
               }`}
-              style={{ minHeight: '44px' }}
               aria-label={`Agregar ${product.name} al carrito`}
               disabled={justAdded}
             >
