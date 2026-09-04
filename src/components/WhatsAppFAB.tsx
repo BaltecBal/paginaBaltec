@@ -8,7 +8,7 @@ const WhatsAppFAB = () => {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-8 right-8 w-[60px] h-[60px] rounded-full flex items-center justify-center z-50 transition-transform duration-200 hover:scale-110"
+      className="fixed bottom-[calc(2rem+env(safe-area-inset-bottom))] right-8 w-[60px] h-[60px] rounded-full flex items-center justify-center z-50 transition-transform duration-200 hover:scale-110 will-change-transform"
       style={{ background: 'var(--whatsapp)', boxShadow: '-3px 2px 10px rgba(0,0,0,0.35)' }}
       aria-label="Contactar por WhatsApp"
     >

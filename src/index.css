@@ -41,9 +41,12 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-    /* No overflow-x here: a clipping <html> disables position:sticky for the
-       whole page (the catalog's filter bar). body's overflow-x below already
-       guards against horizontal scroll. */
+    /* clip, never hidden: `hidden` turns <html> into a scroll container and
+       silently disables position:sticky page-wide (the catalog's filter bar);
+       `clip` just clips — no scrolling, sticky intact. The `hidden` line is
+       the fallback for engines without clip (iOS < 16). */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
@@ -51,6 +54,7 @@
     color: var(--ink-800);
     background: var(--paper);
     overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 

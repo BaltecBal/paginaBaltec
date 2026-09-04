@@ -13,7 +13,7 @@ const CartBanner = () => {
       aria-live="polite"
       className={`fixed bottom-0 left-0 right-0 z-[55] transition-transform duration-300 ease-out ${
         visible ? 'translate-y-0' : 'translate-y-full'
-      }`}
+      } pb-[env(safe-area-inset-bottom)]`}
     >
       <button
         type="button"

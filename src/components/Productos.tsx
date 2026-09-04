@@ -80,7 +80,7 @@ const Productos = ({ categoryId = null }: { categoryId?: string | null }) => {
         </section>
 
         {/* ── Category filter chips ──────────────────── */}
-        <div className="sticky top-14 md:top-16 z-30 bg-paper/95 backdrop-blur border-b border-ink-200">
+        <div className="sticky top-20 z-30 bg-paper/95 backdrop-blur border-b border-ink-200">
           <div className="max-w-[1320px] mx-auto px-4 md:px-10 py-3 flex gap-2 overflow-x-auto sm:overflow-visible sm:flex-wrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {chip('Todas', !active, () => navigateProductos(), 'todas')}
             {categories.map((c) =>
