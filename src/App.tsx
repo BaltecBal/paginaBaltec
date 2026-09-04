@@ -10,7 +10,6 @@ import Footer from './components/Footer';
 import WhatsAppFAB from './components/WhatsAppFAB';
 import SEOHead from './components/SEOHead';
 import Productos from './components/Productos';
-import ProductosCategory from './components/ProductosCategory';
 import CartSidebar from './components/CartSidebar';
 import CartBanner from './components/CartBanner';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -34,10 +33,8 @@ function App() {
           <SEOHead />
           <div className="bg-paper min-h-screen">
             <Header />
-            {onProductosIndex ? (
-              <Productos />
-            ) : isCategory ? (
-              <ProductosCategory categoryId={categoryId} />
+            {onProductosIndex || isCategory ? (
+              <Productos categoryId={isCategory ? categoryId : null} />
             ) : (
               <>
                 <Hero />

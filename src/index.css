@@ -41,7 +41,9 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-    overflow-x: hidden;
+    /* No overflow-x here: a clipping <html> disables position:sticky for the
+       whole page (the catalog's filter bar). body's overflow-x below already
+       guards against horizontal scroll. */
   }
 
   body {
