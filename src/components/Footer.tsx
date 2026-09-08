@@ -79,7 +79,7 @@ const Footer = () => {
                 className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
               >
                 <MessageSquare className="w-4 h-4 text-ink-300 flex-shrink-0" />
-                <span>Ventas: 11 4979-7144</span>
+                <span>Ventas: 11 4939-7144</span>
               </a>
               <a
                 href="mailto:info@balanceobaltec.com"
