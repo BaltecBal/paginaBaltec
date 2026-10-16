@@ -90,7 +90,7 @@ const Hero = () => {
             </h1>
 
             <p className="body-lg mt-8 max-w-[560px]" style={{ color: '#a0abc1' }}>
-              Balanceo dinámico en banco e in situ, reparación de equipos rotativos, alineación láser y análisis de vibraciones. Servicio en CABA y AMBA.
+              Balanceo dinámico en banco e in situ, reparación de equipos rotativos, alineación láser y control de vibraciones. Servicio en CABA y AMBA.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 mt-8">

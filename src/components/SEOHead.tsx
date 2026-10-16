@@ -14,7 +14,7 @@ const localBusinessSchema = {
   name: 'Balanceo Dinámico Baltec SRL',
   alternateName: 'Baltec',
   description:
-    'Especialistas en balanceo dinámico industrial en banco e in situ, reparación de equipos rotativos, alineación láser y análisis de vibraciones en CABA y AMBA. Más de 40 años de experiencia.',
+    'Especialistas en balanceo dinámico industrial en banco e in situ, reparación de equipos rotativos, alineación láser y control de vibraciones en CABA y AMBA. Más de 40 años de experiencia.',
   url: 'https://www.balanceobaltec.com/',
   logo: 'https://www.balanceobaltec.com/baltec.png',
   image: 'https://www.balanceobaltec.com/og-image.png',
@@ -108,7 +108,7 @@ const localBusinessSchema = {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Análisis y medición de vibraciones mecánicas',
+          name: 'Control de vibraciones en equipos rotativos',
         },
       },
     ],

@@ -20,11 +20,11 @@ const faqs = [
   },
   {
     q: '¿Cada cuánto hay que balancear una máquina rotante?',
-    a: 'Se recomienda realizar un balanceo dinámico con cada reparación mayor (cambio de rodamientos, ejes, impulsores o paletas) y cada vez que aparezcan síntomas de vibración anormal, ruido o calentamiento en rodamientos. El análisis de vibraciones periódico permite determinar el momento óptimo de intervención antes de que se produzca una falla, reduciendo costos de mantenimiento no planificado.',
+    a: 'Se recomienda realizar un balanceo dinámico con cada reparación mayor (cambio de rodamientos, ejes, impulsores o paletas) y cada vez que aparezcan síntomas de vibración anormal, ruido o calentamiento en rodamientos. Un control de vibraciones periódico ayuda a intervenir a tiempo, antes de que se produzca una falla, reduciendo costos de mantenimiento no planificado.',
   },
   {
     q: '¿Bajo qué normas trabajan?',
-    a: 'Todos nuestros trabajos de balanceo dinámico se realizan conforme a la norma ISO 21940 (anteriormente ISO 1940-1), que establece las tolerancias de calidad de balanceo para rotores rígidos. Para la evaluación de niveles de vibración en máquinas también aplicamos la norma ISO 10816. El cumplimiento de estas normas garantiza resultados reproducibles, verificables y alineados con estándares internacionales.',
+    a: 'Todos nuestros trabajos de balanceo dinámico se realizan conforme a la norma ISO 21940 (anteriormente ISO 1940-1), que establece las tolerancias de calidad de balanceo para rotores rígidos. Para el control de los niveles de vibración en máquinas tomamos como referencia la norma ISO 10816. El cumplimiento de estas normas garantiza resultados reproducibles, verificables y alineados con estándares internacionales.',
   },
   {
     q: '¿Realizan trabajos en toda el AMBA?',

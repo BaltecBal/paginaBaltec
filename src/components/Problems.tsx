@@ -5,7 +5,7 @@ const problems = [
   },
   {
     title: 'Fallas repetitivas en equipos rotativos',
-    desc: 'Si el equipo falla seguido, hay un problema de raíz. Lo diagnosticamos.',
+    desc: 'Si el equipo falla seguido, hay un problema de raíz. Lo reparamos de fondo.',
   },
   {
     title: 'Desgaste prematuro de rodamientos y ejes',
@@ -13,7 +13,7 @@ const problems = [
   },
   {
     title: 'Pérdida de eficiencia por vibraciones mecánicas',
-    desc: 'Vibraciones, ruidos, consumo elevado. Detectamos la causa antes de que escale.',
+    desc: 'Vibraciones, ruidos, consumo elevado. Balanceamos y controlamos antes de que escale.',
   },
 ];
 

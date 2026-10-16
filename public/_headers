@@ -1,3 +1,13 @@
+# Netlify headers (the site is served by Netlify behind Cloudflare).
+#
+# The HTML shell must always revalidate: it is the only file that points at
+# the current hashed bundle. If a browser or CDN keeps an old index.html, it
+# keeps loading the old bundle — old phone numbers, old copy — forever.
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+
 # Hashed build assets — filename changes on every edit → safe to cache forever
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

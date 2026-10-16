@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Send, Clock, MessageSquare, ShieldCheck } from 'lucide-react';
+import { Send, ShieldCheck } from 'lucide-react';
 import { useToast } from './ui/Toast';
+import GoogleReviews from './GoogleReviews';
 
 const EMAILJS_SERVICE_ID = 'emailjs_forms';
 const EMAILJS_TEMPLATE_ID = 'template_s7fqr6b';
 const EMAILJS_PUBLIC_KEY = '31JqmeM3-S02DDXwh';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -31,7 +32,7 @@ const Contact = () => {
       })
       .then(() => {
         showToast('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.', 'success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', company: '', message: '' });
         formRef.current?.reset();
         setCaptchaVerified(false);
       })
@@ -50,15 +51,6 @@ const Contact = () => {
     setCaptchaVerified(false);
     setIsSubmitting(false);
   }, []);
-
-  const contactInfo = [
-    { icon: Phone, label: 'Teléfono', value: '011 4919-9922' },
-    { icon: MessageSquare, label: 'WhatsApp Administración', value: '15 3574-4732' },
-    { icon: MessageSquare, label: 'WhatsApp Ventas', value: '11 4979-7144' },
-    { icon: Mail, label: 'Email', value: 'info@balanceobaltec.com' },
-    { icon: MapPin, label: 'Dirección', value: 'Av. Del Barco Centenera 3405, Buenos Aires' },
-    { icon: Clock, label: 'Horario', value: 'Lunes a Viernes · 8:00-12:00 y 13:00-17:00' },
-  ];
 
   return (
     <section id="contacto" className="py-24" style={{ background: 'var(--ink-50)' }}>
@@ -105,6 +97,21 @@ const Contact = () => {
               </div>
 
               <div className="mb-8">
+                <label htmlFor="company" className="field-label">
+                  Empresa
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="field-input"
+                  placeholder="Nombre de su empresa"
+                />
+              </div>
+
+              <div className="mb-8">
                 <label htmlFor="message" className="field-label">
                   Mensaje
                 </label>
@@ -146,22 +153,8 @@ const Contact = () => {
             </form>
           </div>
 
-          {/* Contact info */}
-          <div className="flex flex-col gap-6">
-            {contactInfo.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-start gap-4">
-                <div className="text-navy-800 mt-1 flex-shrink-0">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="font-mono text-xs tracking-[0.18em] uppercase text-ink-500 mb-1">
-                    {label}
-                  </div>
-                  <div className="body text-ink-800 whitespace-nowrap">{value}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Google reviews — contact details live only in the footer */}
+          <GoogleReviews />
         </div>
 
         {/* Map */}
