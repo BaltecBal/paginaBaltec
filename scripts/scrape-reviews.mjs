@@ -33,11 +33,19 @@ const AVATARS_DIR = join(__dirname, '..', 'public/images/avatars');
 const PLACE_NAME = 'Balanceo Dinámico Baltec SRL';
 const PLACE_CID = '11350864758242169580';
 const PLACE_URL = `https://www.google.com/maps?cid=${PLACE_CID}`;
+/** Maps feature id (from the place page's own data). */
+const FEATURE_ID = '0x95bccb085f68e3af:0x9d865f5bb08652ec';
+/**
+ * Straight to the reviews tab (`!9m1!1b1`). Signed-out Maps ("vista limitada")
+ * shows 5 cards, and scrolling the list fetches ONE more batch of 5 (batchexecute
+ * rpcids=qv9Egd). The rest sits behind "Ver más reseñas (N)", which needs a
+ * Google sign-in: the listugcposts RPC answers 403 / PERMISSION_DENIED, and the
+ * qv9Egd request is bound to a signed token, so it can't be paged or resized.
+ * Expect 10 of the place's reviews, rating-only ones included.
+ */
+const REVIEWS_URL = `https://www.google.com/maps/place/data=!4m7!3m6!1s${FEATURE_ID}!8m2!3d-34.6542928!4d-58.4197444!9m1!1b1?hl=es`;
 
 const MAX_ATTEMPTS = 4;
-const TEXT_SELECTOR = '.wiI7pd, .Jlozfb';
-const SHARE_SELECTOR =
-  '[aria-label*="Share"][aria-label*="review"], [aria-label^="Compartir la opinión de"], [aria-label^="Compartir reseña de"]';
 
 async function loadPlaywright() {
   if (process.env.PLAYWRIGHT_DIR) {
@@ -56,8 +64,8 @@ async function navigateToPlace(page) {
     .first()
     .click({ timeout: 3000 })
     .catch(() => {});
-  await page.goto(`${PLACE_URL}&hl=es`, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.waitForTimeout(6000);
+  await page.goto(REVIEWS_URL, { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.waitForTimeout(8000);
 }
 
 async function main() {
@@ -84,13 +92,18 @@ async function main() {
       console.log(`Attempt ${attempt}/${MAX_ATTEMPTS}`);
       await navigateToPlace(page);
       // Overall rating + total count from the place header (".F7nice").
+      // Reviews tab header: big "5,0" + "15 reseñas". (.F7nice is the overview
+      // tab's version, kept as a fallback.)
       summary = await page.evaluate(() => {
-        const box = document.querySelector('.F7nice');
-        if (!box) return null;
-        const txt = box.textContent || '';
-        const rating = parseFloat((txt.match(/(\d[.,]\d)/) || [])[1]?.replace(',', '.') || 'NaN');
-        const count = parseInt((txt.match(/\(([\d.,]+)\)/) || [])[1]?.replace(/[.,]/g, '') || 'NaN', 10);
-        return { rating, count };
+        const big = document.querySelector('.fontDisplayLarge')?.textContent || '';
+        const countTxt = [...document.querySelectorAll('.fontBodySmall')].map((e) => e.textContent || '').find((t) => /^\s*[\d.]+\s+(reseñas|opiniones)/i.test(t));
+        const box = document.querySelector('.F7nice')?.textContent || '';
+        const rating = parseFloat(((big || box).match(/(\d[.,]\d)/) || [])[1]?.replace(',', '.') || 'NaN');
+        const count = parseInt(
+          ((countTxt || '').match(/([\d.]+)/) || (box.match(/\(([\d.,]+)\)/) || []))[1]?.replace(/[.,]/g, '') || 'NaN',
+          10,
+        );
+        return Number.isNaN(rating) ? null : { rating, count };
       });
       console.log('URL:', page.url(), 'summary:', summary);
       if (summary && !Number.isNaN(summary.rating)) break;
@@ -119,7 +132,8 @@ async function main() {
       const n = await cards.count();
       if (n === prev && i > 4) break;
       prev = n;
-      // Headless Maps shows 5 cards plus a "Ver más reseñas (N)" button.
+      // Scrolling fetches the second batch of 5; "Ver más reseñas (N)" past that
+      // only opens a sign-in prompt.
       await page
         .locator('button:has-text("Ver más reseñas"), button:has-text("More reviews")')
         .first()
@@ -136,44 +150,32 @@ async function main() {
     await page.evaluate(() => document.querySelectorAll('button.w8nwRe').forEach((b) => b.click()));
     await page.waitForTimeout(1000);
 
-    const reviews = await page.evaluate(
-      ({ textSelector, shareSelector }) => {
-        const out = [];
-        for (const btn of document.querySelectorAll(shareSelector)) {
-          const label = btn.getAttribute('aria-label') || '';
-          const m = label.match(/Share (.+)'s review/) || label.match(/Compartir (?:la opinión|reseña) de (.+?)\.?$/);
-          const name = m ? m[1].trim() : '';
-          // Walk up to the card: exactly one share button and one rating.
-          let card = btn;
-          let found = null;
-          for (let i = 0; i < 15 && card; i++) {
-            card = card.parentElement;
-            if (!card) break;
-            if (!card.querySelector('.kvMYJc')) continue;
-            if (card.querySelectorAll(shareSelector).length !== 1) continue;
-            if (card.querySelectorAll('.kvMYJc').length !== 1) continue;
-            found = card;
-            break;
-          }
-          if (!found || !name) continue;
-          const text = found.querySelector(textSelector)?.textContent?.trim() || '';
-          const stars = found.querySelector('.kvMYJc')?.getAttribute('aria-label') || '';
-          const rating = parseInt((stars.match(/(\d)/) || [])[1] || '0', 10);
-          const date = found.querySelector('.rsqaWe')?.textContent?.trim() || '';
-          // Profile photo (36px thumbnail) — upscaled to 96px (2x the 48px slot).
-          const img = (btn.closest('.jftiEf') || found).querySelector('img[src*="googleusercontent.com/a"]');
-          const avatarUrl = (img?.getAttribute('src') || '')
-            .replace(/=w\d+-h\d+[^&]*$/, '=w96-h96-p-rp-mo-br100')
-            .replace(/=s\d+(-c)?[^&]*$/, '=s96-c');
-          // Google's "Local Guide" badge, shown under the name like Ayni does.
-          const isLocalGuide = /Local Guide/i.test((btn.closest('.jftiEf') || found).querySelector('.RfnDt')?.textContent || '');
-          if (!rating) continue;
-          if (!out.find((r) => r.name === name && r.text === text)) out.push({ name, rating, text, date, isLocalGuide, avatarUrl });
-        }
-        return out;
-      },
-      { textSelector: TEXT_SELECTOR, shareSelector: SHARE_SELECTOR },
-    );
+    // One card per review (.jftiEf). The reviewer's own words live in .MyEned;
+    // the owner's reply ("Respuesta del propietario", .CDe7pd) uses the same
+    // .wiI7pd text class, so it must never be read as the review. No .MyEned =
+    // a rating without a comment: kept, with text "".
+    const reviews = await page.evaluate(() => {
+      const out = [];
+      for (const card of document.querySelectorAll('.jftiEf')) {
+        const name = card.querySelector('.d4r55')?.textContent?.trim() || '';
+        const stars = card.querySelector('.kvMYJc')?.getAttribute('aria-label') || '';
+        const rating = parseInt((stars.match(/(\d)/) || [])[1] || '0', 10);
+        if (!name || !rating) continue;
+        const own = card.querySelector('.MyEned');
+        const text = own?.querySelector('.wiI7pd')?.textContent?.trim() || '';
+        const date = card.querySelector('.rsqaWe')?.textContent?.trim() || '';
+        // Profile photo (36px thumbnail) — upscaled to 96px (2x the 48px slot).
+        const img = card.querySelector('img[src*="googleusercontent.com/a"]');
+        const avatarUrl = (img?.getAttribute('src') || '')
+          .replace(/=w\d+-h\d+[^&]*$/, '=w96-h96-p-rp-mo-br100')
+          .replace(/=s\d+(-c)?[^&]*$/, '=s96-c');
+        // Google's "Local Guide" badge, shown under the name like Ayni does.
+        const isLocalGuide = /Local Guide/i.test(card.querySelector('.RfnDt')?.textContent || '');
+        const id = card.getAttribute('data-review-id') || `${name}|${text}`;
+        if (!out.find((r) => r.id === id)) out.push({ id, name, rating, text, date, isLocalGuide, avatarUrl });
+      }
+      return out.map(({ id, ...r }) => r);
+    });
 
     console.log(`Found ${reviews.length} reviews (${reviews.filter((r) => r.text).length} with text)`);
     if (reviews.length === 0) {

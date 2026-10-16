@@ -336,21 +336,33 @@
     animation: scroll 30s linear infinite;
   }
 
-  /* Reviews marquee: same loop as the clients, slower so the text can be read. */
+  /* Reviews marquee: same loop as the clients, slower so the text can be read.
+     It always moves — the owner wants it to — including under
+     prefers-reduced-motion (Windows "animation effects" off, iOS Reduce Motion,
+     Android "remove animations"), where it just goes slower. Before, that
+     setting stopped it dead and turned the strip into a scroll container with
+     a visible horizontal scrollbar. */
   .animate-reviews {
     animation: scroll 55s linear infinite;
   }
-  .animate-reviews:hover,
-  .animate-reviews:focus-within {
-    animation-play-state: paused;
+  /* Pause on hover only where hover is real: on touch screens :hover sticks
+     after a tap and froze the strip. Touch pauses only while a finger is down. */
+  @media (hover: hover) {
+    .animate-reviews:hover,
+    .animate-reviews:focus-within {
+      animation-play-state: paused;
+    }
   }
-  .reviews-dialog::backdrop {
-    background: rgba(13, 17, 23, 0.5);
+  .animate-reviews[data-touching] {
+    animation-play-state: paused;
   }
   @media (prefers-reduced-motion: reduce) {
     .animate-reviews {
-      animation: none;
+      animation-duration: 110s;
     }
+  }
+  .reviews-dialog::backdrop {
+    background: rgba(13, 17, 23, 0.5);
   }
 
   .animate-fade-in-up {

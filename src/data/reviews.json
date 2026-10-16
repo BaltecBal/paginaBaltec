@@ -1,9 +1,9 @@
 {
-  "scrapedAt": "2026-10-16T12:18:39.698Z",
+  "scrapedAt": "2026-10-16T13:12:45.634Z",
   "placeName": "Balanceo Dinámico Baltec SRL",
   "placeUrl": "https://www.google.com/maps?cid=11350864758242169580",
   "rating": 5,
-  "totalReviews": 15,
+  "totalReviews": 16,
   "reviews": [
     {
       "name": "Miguel Ferreira",
@@ -41,9 +41,49 @@
       "name": "Santiago Gutierrez",
       "rating": 5,
       "text": "Llegué a Balanceo Baltec gracias a un colega que los recomendó. La verdad es que la experiencia fue más que satisfactoria.\n\nNecesitaba un balanceo para la turbina de extracción de aire de mi restaurante, y no solo que resolvieron la situación de forma rápida, sino que también me dieron sugerencias sobre mi caso particular.\n\n¡Súper recomendado!",
-      "date": "Hace 18 horas",
+      "date": "Hace 19 horas",
       "isLocalGuide": false,
       "avatar": "/images/avatars/santiago-gutierrez.png"
+    },
+    {
+      "name": "Mariano Drozd",
+      "rating": 5,
+      "text": "\"Gente que resuelve\"\nEn los años que los conozco, la verdad esa el la frase que define mejor esta empresa.\nMantienen calidad, compromiso y garantía. Eso nunca se lee o escucha.",
+      "date": "Hace 2 meses",
+      "isLocalGuide": true,
+      "avatar": "/images/avatars/mariano-drozd.png"
+    },
+    {
+      "name": "Fernando Perez Kanarko",
+      "rating": 5,
+      "text": "Excelente servicio prestan.",
+      "date": "Hace 2 meses",
+      "isLocalGuide": false,
+      "avatar": "/images/avatars/fernando-perez-kanarko.png"
+    },
+    {
+      "name": "Sebastian Frick",
+      "rating": 5,
+      "text": "",
+      "date": "Hace 2 meses",
+      "isLocalGuide": true,
+      "avatar": "/images/avatars/sebastian-frick.png"
+    },
+    {
+      "name": "andres melian",
+      "rating": 5,
+      "text": "",
+      "date": "Hace 4 años",
+      "isLocalGuide": false,
+      "avatar": "/images/avatars/andres-melian.png"
+    },
+    {
+      "name": "L T",
+      "rating": 5,
+      "text": "",
+      "date": "Hace 6 años",
+      "isLocalGuide": true,
+      "avatar": "/images/avatars/l-t.png"
     }
   ]
 }

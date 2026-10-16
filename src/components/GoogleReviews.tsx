@@ -172,7 +172,7 @@ const AllReviews = ({
             Lo que dicen nuestros clientes
           </h2>
           <p className="text-sm text-ink-500 mt-1">
-            {reviews.length} opiniones con comentario · {reviewsData.totalReviews} calificaciones en Google
+            {reviewsData.totalReviews ?? reviews.length} opiniones en Google
           </p>
           <button
             type="button"
@@ -188,7 +188,14 @@ const AllReviews = ({
           {reviews.map((r, i) => (
             <article key={i} className="py-4 border-b border-ink-100 last:border-b-0">
               <Who review={r} hue={HUES[i % HUES.length]} size={48} />
-              <p className="mt-3 text-sm leading-[1.6] text-ink-800 whitespace-pre-line">{clean(r.text)}</p>
+              {r.text ? (
+                <p className="mt-3 text-sm leading-[1.6] text-ink-800 whitespace-pre-line">{clean(r.text)}</p>
+              ) : (
+                // Rating without a comment: say exactly that, never fill in words.
+                <p className="mt-3 text-sm text-ink-500">
+                  Calificó con {r.rating} {r.rating === 1 ? 'estrella' : 'estrellas'}
+                </p>
+              )}
             </article>
           ))}
         </div>
@@ -205,6 +212,8 @@ const AllReviews = ({
 
 const GoogleReviews = () => {
   const [open, setOpen] = useState(false);
+  const [touching, setTouching] = useState(false);
+  // Carousel: only reviews with a comment. The dialog adds the rating-only ones after them.
   const withText = reviewsData.reviews.filter((r) => r.text);
   if (!reviewsData.rating || withText.length === 0) return null;
 
@@ -237,25 +246,36 @@ const GoogleReviews = () => {
       </div>
 
       {/* Full-bleed track, same as Clients. Two identical halves + translateX(-50%)
-          = no jump at the loop point. Pauses on hover/focus; reduced motion: swipe. */}
-      <div className="relative overflow-hidden motion-reduce:overflow-x-auto w-full">
+          = no jump at the loop point. Always moving (slower under reduced motion,
+          see index.css); pauses on real hover/focus, or while a finger is down.
+          overflow-hidden on every device: never a scrollbar under the strip. */}
+      <div
+        className="relative overflow-hidden w-full"
+        onTouchStart={() => setTouching(true)}
+        onTouchEnd={() => setTouching(false)}
+        onTouchCancel={() => setTouching(false)}
+      >
         <div
-          className="absolute left-0 top-0 bottom-0 w-10 md:w-32 z-10 pointer-events-none motion-reduce:hidden"
+          className="absolute left-0 top-0 bottom-0 w-10 md:w-32 z-10 pointer-events-none"
           style={{ background: 'linear-gradient(to right, var(--ink-50), transparent)' }}
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-10 md:w-32 z-10 pointer-events-none motion-reduce:hidden"
+          className="absolute right-0 top-0 bottom-0 w-10 md:w-32 z-10 pointer-events-none"
           style={{ background: 'linear-gradient(to left, var(--ink-50), transparent)' }}
         />
 
-        <div className="flex items-stretch animate-reviews py-1" style={{ width: 'fit-content' }}>
+        <div
+          className="flex items-stretch animate-reviews py-1"
+          data-touching={touching || undefined}
+          style={{ width: 'fit-content' }}
+        >
           <ul className="flex items-stretch list-none m-0 p-0" role="list">
             {withText.map((r, i) => (
               <Card key={`a${i}`} review={r} hue={HUES[i % HUES.length]} />
             ))}
           </ul>
           {/* Second copy only feeds the loop. */}
-          <ul className="flex items-stretch list-none m-0 p-0 motion-reduce:hidden" aria-hidden="true">
+          <ul className="flex items-stretch list-none m-0 p-0" aria-hidden="true">
             {withText.map((r, i) => (
               <Card key={`b${i}`} review={r} hue={HUES[i % HUES.length]} />
             ))}
@@ -269,7 +289,7 @@ const GoogleReviews = () => {
         </button>
       </div>
 
-      <AllReviews open={open} onClose={() => setOpen(false)} reviews={withText} />
+      <AllReviews open={open} onClose={() => setOpen(false)} reviews={[...withText, ...reviewsData.reviews.filter((r) => !r.text)]} />
     </section>
   );
 };
