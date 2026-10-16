@@ -59,7 +59,7 @@ const Contact = () => {
         </h2>
 
         {/* Form only — contact details live in the footer, reviews below "Nuestro objetivo". */}
-        <div className="max-w-[880px] mb-12">
+        <div className="mb-12">
           <div>
             <form ref={formRef} onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">

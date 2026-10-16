@@ -40,18 +40,15 @@ const Stars = ({ value, size = 'w-4 h-4' }: { value: number; size?: string }) =>
 );
 
 const Bubble = ({ review }: { review: Review }) => {
-  // Long reviews get a wider bubble instead of a towering one.
-  const wide = review.text.length > 160;
+  // Todas del mismo ancho; una reseña larga se corta a 4 renglones con «…»
+  // (el texto entero queda en el title y en «Ver en Google»).
+  const texto = review.text.replace(/\s+/g, ' ').trim();
   return (
-    <figure
-      className={`flex-shrink-0 mx-3 md:mx-5 flex flex-col ${
-        wide ? 'w-[330px] md:w-[600px]' : 'w-[240px] md:w-[320px]'
-      }`}
-    >
+    <figure className="flex-shrink-0 mx-3 md:mx-5 flex flex-col w-[260px] md:w-[340px]">
       <div className="relative bg-paper border-2 border-navy-800 rounded-2xl px-5 py-4 md:px-6 md:py-5">
         <Stars value={review.rating} />
-        <blockquote className="text-[15px] leading-relaxed text-ink-800 mt-3">
-          “{review.text.replace(/\s+/g, ' ').trim()}”
+        <blockquote className="text-[15px] leading-relaxed text-ink-800 mt-3 line-clamp-4" title={texto}>
+          “{texto}”
         </blockquote>
         {/* Tail: a rotated square whose white fill hides the bubble's bottom border. */}
         <span
@@ -108,12 +105,12 @@ const GoogleReviews = () => {
           style={{ background: 'linear-gradient(to left, var(--ink-50), transparent)' }}
         />
 
-        <div className="flex items-center animate-reviews pb-2" style={{ width: 'fit-content' }}>
+        <div className="flex items-end animate-reviews pb-2" style={{ width: 'fit-content' }}>
           {withText.map((r, i) => (
             <Bubble key={`a${i}`} review={r} />
           ))}
           {/* Second copy only feeds the loop. */}
-          <div className="flex items-center motion-reduce:hidden" aria-hidden="true">
+          <div className="flex items-end motion-reduce:hidden" aria-hidden="true">
             {withText.map((r, i) => (
               <Bubble key={`b${i}`} review={r} />
             ))}
