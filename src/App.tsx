@@ -5,6 +5,7 @@ import Services from './components/Services';
 import About from './components/About';
 import FAQ from './components/FAQ';
 import Clients from './components/Clients';
+import GoogleReviews from './components/GoogleReviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppFAB from './components/WhatsAppFAB';
@@ -41,6 +42,7 @@ function App() {
                 <Services />
                 <Problems />
                 <About />
+                <GoogleReviews />
                 <Clients />
                 <Contact />
                 <FAQ />

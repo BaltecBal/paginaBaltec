@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { Send, ShieldCheck } from 'lucide-react';
 import { useToast } from './ui/Toast';
-import GoogleReviews from './GoogleReviews';
 
 const EMAILJS_SERVICE_ID = 'emailjs_forms';
 const EMAILJS_TEMPLATE_ID = 'template_s7fqr6b';
@@ -59,8 +58,8 @@ const Contact = () => {
           Hablemos de su <em className="underline-hand-blue">proyecto.</em>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-          {/* Form */}
+        {/* Form only — contact details live in the footer, reviews below "Nuestro objetivo". */}
+        <div className="max-w-[880px] mb-12">
           <div>
             <form ref={formRef} onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
@@ -152,9 +151,6 @@ const Contact = () => {
               </div>
             </form>
           </div>
-
-          {/* Google reviews — contact details live only in the footer */}
-          <GoogleReviews />
         </div>
 
         {/* Map */}
