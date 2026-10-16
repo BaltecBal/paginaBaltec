@@ -340,8 +340,12 @@
   .animate-reviews {
     animation: scroll 55s linear infinite;
   }
-  .animate-reviews:hover {
+  .animate-reviews:hover,
+  .animate-reviews:focus-within {
     animation-play-state: paused;
+  }
+  .reviews-dialog::backdrop {
+    background: rgba(13, 17, 23, 0.5);
   }
   @media (prefers-reduced-motion: reduce) {
     .animate-reviews {

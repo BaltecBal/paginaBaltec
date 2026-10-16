@@ -58,9 +58,10 @@ const Contact = () => {
           Hablemos de su <em className="underline-hand-blue">proyecto.</em>
         </h2>
 
-        {/* Form only — contact details live in the footer, reviews below "Nuestro objetivo". */}
-        <div className="mb-12">
-          <div>
+        {/* Form left, map right (stacked on mobile). Contact details live in the footer,
+            reviews below "Nuestro objetivo". */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
+          <div className="min-w-0">
             <form ref={formRef} onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
                 <div>
@@ -151,20 +152,21 @@ const Contact = () => {
               </div>
             </form>
           </div>
-        </div>
 
-        {/* Map */}
-        <div className="border-2 border-navy-800 overflow-hidden">
-          <iframe
+          {/* Map: as tall as the form on desktop, fixed height when stacked. */}
+          <div className="min-w-0 h-[340px] lg:h-auto lg:min-h-[420px] border-2 border-navy-800 overflow-hidden">
+            <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.0162398078064!2d-58.4197444!3d-34.6542928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccb085f68e3af%3A0x9d865f5bb08652ec!2sBalanceo%20Din%C3%A1mico%20Baltec%20SRL!5e0!3m2!1ses-419!2sar!4v1756749815894!5m2!1ses-419!2sar&z=16"
             width="100%"
-            height="400"
+            height="100%"
+            className="block w-full h-full"
             style={{ border: 0 }}
             allowFullScreen={false}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Ubicación de Balanceo Dinámico Baltec SRL"
-          />
+            />
+          </div>
         </div>
       </div>
     </section>

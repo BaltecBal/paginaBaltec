@@ -19,12 +19,15 @@
  * never does, the existing JSON is left untouched.
  */
 
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT = join(__dirname, '..', 'src/data/reviews.json');
+/** Reviewer photos, downloaded at scrape time (as Ayni does) so the site never hotlinks Google. */
+const AVATARS_DIR = join(__dirname, '..', 'public/images/avatars');
 
 /** Place from the map embed in src/components/Contact.tsx (CID of 0x9d865f5bb08652ec). */
 const PLACE_NAME = 'Balanceo Dinámico Baltec SRL';
@@ -157,8 +160,15 @@ async function main() {
           const stars = found.querySelector('.kvMYJc')?.getAttribute('aria-label') || '';
           const rating = parseInt((stars.match(/(\d)/) || [])[1] || '0', 10);
           const date = found.querySelector('.rsqaWe')?.textContent?.trim() || '';
+          // Profile photo (36px thumbnail) — upscaled to 96px (2x the 48px slot).
+          const img = (btn.closest('.jftiEf') || found).querySelector('img[src*="googleusercontent.com/a"]');
+          const avatarUrl = (img?.getAttribute('src') || '')
+            .replace(/=w\d+-h\d+[^&]*$/, '=w96-h96-p-rp-mo-br100')
+            .replace(/=s\d+(-c)?[^&]*$/, '=s96-c');
+          // Google's "Local Guide" badge, shown under the name like Ayni does.
+          const isLocalGuide = /Local Guide/i.test((btn.closest('.jftiEf') || found).querySelector('.RfnDt')?.textContent || '');
           if (!rating) continue;
-          if (!out.find((r) => r.name === name && r.text === text)) out.push({ name, rating, text, date });
+          if (!out.find((r) => r.name === name && r.text === text)) out.push({ name, rating, text, date, isLocalGuide, avatarUrl });
         }
         return out;
       },
@@ -171,6 +181,41 @@ async function main() {
       process.exitCode = 1;
       return;
     }
+
+    // Download avatars. Google serves one identical default image to people
+    // without a photo: a repeated hash means "no photo" -> the site draws an initial.
+    mkdirSync(AVATARS_DIR, { recursive: true });
+    const seen = new Map();
+    for (const r of reviews) {
+      const url = r.avatarUrl;
+      delete r.avatarUrl;
+      if (!url) continue;
+      try {
+        const resp = await fetch(url, { headers: { Accept: 'image/webp,image/*' } });
+        if (!resp.ok) continue;
+        const buf = Buffer.from(await resp.arrayBuffer());
+        const hash = createHash('md5').update(buf).digest('hex');
+        const type = resp.headers.get('content-type') || '';
+        const ext = type.includes('webp') ? 'webp' : type.includes('png') ? 'png' : 'jpg';
+        const slug = r.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const file = `${slug}.${ext}`;
+        if (seen.has(hash)) {
+          // Second sighting of the same bytes: Google's default avatar. Drop both.
+          const first = seen.get(hash);
+          if (first) for (const o of reviews) if (o.avatar === `/images/avatars/${first}`) delete o.avatar;
+          seen.set(hash, null);
+          continue;
+        }
+        writeFileSync(join(AVATARS_DIR, file), buf);
+        seen.set(hash, file);
+        r.avatar = `/images/avatars/${file}`;
+      } catch {
+        /* no photo -> initial letter */
+      }
+    }
+    const used = new Set(reviews.map((r) => r.avatar?.split('/').pop()).filter(Boolean));
+    if (existsSync(AVATARS_DIR)) for (const f of readdirSync(AVATARS_DIR)) if (!used.has(f)) unlinkSync(join(AVATARS_DIR, f));
+    console.log(`Avatars: ${reviews.filter((r) => r.avatar).length}/${reviews.length}`);
 
     writeFileSync(
       OUTPUT,
